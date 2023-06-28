@@ -31,7 +31,8 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+
+
 
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
@@ -50,7 +51,44 @@ end)
 
 -- Costis --
 
+
+local function is_nodejs_extendion(file_extension)
+    local supported_extensions = { "ts", "js", "json", "jsx", "tsx" }
+    for _, extension in ipairs(supported_extensions) do
+        if extension == file_extension then
+            return true
+        end
+    end
+    return false
+end
+
+
 vim.keymap.set("n", "<C-s>", function()
-    vim.lsp.buf.format()
-    vim.cmd("w")
+    local file_extension = vim.fn.expand("%:e")
+
+    local file_path = vim.fn.expand("%:p")
+    local working_directory = vim.fn.getcwd()
+    local relative_path = vim.fn.pathshorten(file_path, working_directory)
+
+
+    if is_nodejs_extendion(file_extension) then
+        vim.lsp.buf.format()
+        vim.cmd("w")
+        -- vim.cmd("!eslintd  " .. file .. " --fix")
+        print(relative_path)
+    else
+        vim.lsp.buf.format()
+        vim.cmd("w")
+    end
 end);
+
+
+vim.keymap.set("n", "<leader>f", function()
+    local file_extension = vim.fn.expand("%:e")
+    if is_nodejs_extendion(file_extension) then
+        vim.lsp.buf.format()
+        vim.cmd("silent !prettierd %")
+    else
+        vim.lsp.buf.format()
+    end
+end)
