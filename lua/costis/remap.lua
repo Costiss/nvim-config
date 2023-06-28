@@ -66,16 +66,10 @@ end
 vim.keymap.set("n", "<C-s>", function()
     local file_extension = vim.fn.expand("%:e")
 
-    local file_path = vim.fn.expand("%:p")
-    local working_directory = vim.fn.getcwd()
-    local relative_path = vim.fn.pathshorten(file_path, working_directory)
-
-
     if is_nodejs_extendion(file_extension) then
         vim.lsp.buf.format()
         vim.cmd("w")
-        -- vim.cmd("!eslintd  " .. file .. " --fix")
-        print(relative_path)
+        vim.cmd("silent !eslint_d % --fix")
     else
         vim.lsp.buf.format()
         vim.cmd("w")
