@@ -10,13 +10,6 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
-vim.keymap.set("n", "<leader>vwm", function()
-    require("vim-with-me").StartVimWithMe()
-end)
-vim.keymap.set("n", "<leader>svwm", function()
-    require("vim-with-me").StopVimWithMe()
-end)
-
 -- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
@@ -31,7 +24,7 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-
+vim.keymap.set("n", "gb", "<C-o>")
 
 
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
@@ -51,38 +44,8 @@ end)
 
 -- Costis --
 
-
-local function is_nodejs_extendion(file_extension)
-    local supported_extensions = { "ts", "js", "json", "jsx", "tsx" }
-    for _, extension in ipairs(supported_extensions) do
-        if extension == file_extension then
-            return true
-        end
-    end
-    return false
-end
-
+vim.keymap.set("i", "<C-BS>", "<C-W>");
 
 vim.keymap.set("n", "<C-s>", function()
-    local file_extension = vim.fn.expand("%:e")
-
-    if is_nodejs_extendion(file_extension) then
-        vim.lsp.buf.format()
-        vim.cmd("w")
-        vim.cmd("silent !eslint_d % --fix")
-    else
-        vim.lsp.buf.format()
-        vim.cmd("w")
-    end
+    vim.cmd("w")
 end);
-
-
-vim.keymap.set("n", "<leader>f", function()
-    local file_extension = vim.fn.expand("%:e")
-    if is_nodejs_extendion(file_extension) then
-        vim.lsp.buf.format()
-        vim.cmd("silent !prettierd %")
-    else
-        vim.lsp.buf.format()
-    end
-end)
