@@ -14,5 +14,8 @@ require("nvim-tree").setup({
     renderer = {
         group_empty = true,
     },
+    filters = {
+        dotfiles = false,
+    },
     on_attach = on_attach
 })

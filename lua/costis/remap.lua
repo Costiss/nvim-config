@@ -49,3 +49,6 @@ vim.keymap.set("i", "<C-BS>", "<C-W>");
 vim.keymap.set("n", "<C-s>", function()
     vim.cmd("w")
 end);
+
+
+vim.keymap.set("n", "<leader>z", '<cmd>Centerpad<cr>', { silent = true, noremap = true })

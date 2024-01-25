@@ -122,5 +122,17 @@ else
 
 
         use "tpope/vim-commentary"
+        -- packer.nvim
+        use { 'smithbm2316/centerpad.nvim' }
+
+        use { 'vim-test/vim-test' }
+
+        use { 'windwp/nvim-ts-autotag', config = function()
+            require('nvim-ts-autotag').setup()
+        end }
+
+        use { 'm4xshen/autoclose.nvim', config = function()
+            require('autoclose').setup()
+        end }
     end)
 end

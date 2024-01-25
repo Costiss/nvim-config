@@ -17,10 +17,30 @@ else
 
     require("mason").setup()
     require("mason-lspconfig").setup({
-        ensure_installed = { "tsserver", "eslint", "rust_analyzer", "gopls", "efm", "lua_ls", "html" }
+        ensure_installed = {
+            -- Langs
+            "tsserver",
+            "rust_analyzer",
+            "gopls",
+            "efm",
+            "lua_ls",
+            "kotlin_language_server",
+            "clangd",
+            -- HTML/CSS
+            "html",
+            "tailwindcss",
+            -- CI/CD
+            "docker_compose_language_service",
+            "dockerls",
+            "terraformls",
+            -- JS ECOSSYSTEM
+            "eslint",
+            "prismals",
+            "volar"
+        }
     })
 
-    -- LSPs Setups
+    -- LSPs Setups ---------------------------------------------------------------------------------------------------
     local lsp_format = require('lsp-format')
     lsp_format.setup({
         tab_width = 4,
@@ -28,20 +48,11 @@ else
 
     local lspconfig = require('lspconfig')
 
-    lspconfig.html.setup({
+    -- LspConfig/Languages -------------------------------------------------------------------------
+    lspconfig.rust_analyzer.setup({ -- RUST
         on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
     })
-
-    lspconfig.tsserver.setup({
-        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
-    })
-    lspconfig.eslint.setup({
-        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
-    })
-    lspconfig.rust_analyzer.setup({
-        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
-    })
-    lspconfig.gopls.setup({
+    lspconfig.gopls.setup({ -- GOLANG
         on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end,
         settings = {
             gopls = {
@@ -50,23 +61,96 @@ else
                 },
                 staticcheck = true,
                 gofumpt = true,
+                usePlaceholders = false,
             }
         },
     })
+    lspconfig.tsserver.setup({}) --TYPESCRIPT
 
-    lspconfig.lua_ls.setup({
-        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
-    })
+    local efm_formatters = {
+        prettier = {
+            formatCommand = './node_modules/.bin/prettier',
+            rootMarkers = { 'package.json' },
+        },
+        prettierd = {
+            formatCommand = 'prettierd ${INPUT}',
+            formatStdin = true,
+        },
+    }
 
     lspconfig.efm.setup({
+        on_attach = function(client, bufnr)
+            require("lsp-format").on_attach(client, bufnr)
+        end,
+        init_options = {
+            documentFormatting = true,
+        },
+        filetypes = {
+            'typescript',
+            'typescriptreact',
+            'javascript',
+            'javascriptreact',
+            'css',
+            'json',
+            'html',
+        },
+        settings = {
+            languages = {
+                typescript = { efm_formatters.prettierd },
+                typescriptreact = { efm_formatters.prettierd },
+                javascript = { efm_formatters.prettierd },
+                javascriptreact = { efm_formatters.prettierd },
+                json = { efm_formatters.prettierd },
+                css = { efm_formatters.prettierd },
+                html = { efm_formatters.prettierd },
+            },
+        },
+    })
+    lspconfig.lua_ls.setup({ -- LUA
+        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+    })
+    lspconfig.clangd.setup({ -- C / C ++
+        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+    })
+    -- LspConfig/HTML-CSS -----------------------------------------------------------------------
+    lspconfig.html.setup({ -- HTML
+        on_attach = function(client, bufnr)
+            require("lsp-format").on_attach(client, bufnr)
+            require("lsp-format").filetypes_map.html = 'prettier'
+        end
+    })
+    lspconfig.tailwindcss.setup({ -- TAILWIND
+        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+    })
+    -- LspConfig/CI-CD
+    lspconfig.dockerls.setup({ -- DOCKER
+        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+    })
+    lspconfig.docker_compose_language_service.setup({ -- DOCKER COMPOSE
+        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+    })
+    lspconfig.terraformls.setup({ -- TERRAFORM
         on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
     })
 
-    -- lspconfig.kotlin_language_server.setup({
-    --     on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
-    -- })
+    -- LspConfig/JS ECOSSYSTEM -------------------------------------------------------------------
+    -- lspconfig.eslint.setup({ -- ESLINT
+    --     on_attach = function(client, bufnr)
+    --         require("lsp-format").on_attach(client, bufnr)
 
-    -- End LSPs Setups --
+    --         vim.api.nvim_create_autocmd("BufWritePre", {
+    --             buffer = bufnr,
+    --             command = "EslintFixAll",
+    --         })
+    --     end
+    -- })
+    lspconfig.prismals.setup({ -- PRISMA ORM
+        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+    })
+    lspconfig.volar.setup({ -- VOLAR
+        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+    })
+    -- End LSPs Setups -- ---------------------------------------------------------------------------------------------
 
     -- Fix Undefined global 'vim'
     lsp.nvim_workspace()
@@ -113,7 +197,7 @@ else
         vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
         vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
         vim.keymap.set("n", "<leader>.", function() vim.lsp.buf.code_action() end, opts)
-        vim.keymap.set("n", "<leader>vr", function() vim.lsp.buf.references() end, opts)
+        vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
         vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
         vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
     end)
