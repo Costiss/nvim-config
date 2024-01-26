@@ -26,6 +26,7 @@ else
             "lua_ls",
             "kotlin_language_server",
             "clangd",
+            "zls",
             -- HTML/CSS
             "html",
             "tailwindcss",
@@ -50,6 +51,9 @@ else
 
     -- LspConfig/Languages -------------------------------------------------------------------------
     lspconfig.rust_analyzer.setup({ -- RUST
+        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+    })
+    lspconfig.zls.setup({ -- RUST
         on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
     })
     lspconfig.gopls.setup({ -- GOLANG
