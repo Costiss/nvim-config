@@ -61,6 +61,7 @@ else
 
         use {
             'Exafunction/codeium.vim',
+            tag = "1.6.13",
             config = function()
                 -- Change '<C-g>' here to any keycode you like.
                 vim.keymap.set('i', '<tab>', function() return vim.fn['codeium#Accept']() end, { expr = true })
@@ -134,5 +135,7 @@ else
         use { 'm4xshen/autoclose.nvim', config = function()
             require('autoclose').setup()
         end }
+
+        use { 'cdelledonne/vim-cmake' }
     end)
 end
