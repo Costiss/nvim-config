@@ -19,6 +19,10 @@ vim.keymap.set("n", "<leader>Y", [["+Y]])
 
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
+vim.keymap.set('n', 'c', '"_c', { noremap = true })
+vim.keymap.set('n', 'd', '"_d', { noremap = true })
+
+
 -- This is going to get me cancelled
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
@@ -45,6 +49,11 @@ vim.keymap.set("i", "<C-BS>", "<C-W>");
 
 vim.keymap.set("n", "<C-s>", function()
     vim.cmd("w")
+end);
+vim.keymap.set("n", "<leader>s", function()
+    vim.cmd("FormatDisable")
+    vim.cmd("w")
+    vim.cmd("FormatEnable")
 end);
 
 

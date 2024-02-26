@@ -18,7 +18,7 @@ else
         }
 
         use 'folke/tokyonight.nvim'
-        vim.cmd [[colorscheme tokyonight-night]]
+        vim.cmd [[colorscheme tokyonight-moon]]
 
         use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
 
@@ -58,6 +58,7 @@ else
 
 
         use('nvim-tree/nvim-tree.lua')
+        use('nvim-tree/nvim-web-devicons')
 
         use {
             'Exafunction/codeium.vim',

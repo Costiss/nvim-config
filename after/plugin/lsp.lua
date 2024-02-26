@@ -50,7 +50,15 @@ else
     local lspconfig = require('lspconfig')
 
     -- LspConfig/Languages -------------------------------------------------------------------------
-    lspconfig.rust_analyzer.setup({ -- RUST
+    -- lspconfig.rust_analyzer.setup({ -- RUST
+    --     on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+    -- })
+
+    lspconfig.kotlin_language_server.setup({ -- KOTLIN
+        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+    })
+
+    lspconfig.vtsls.setup({ -- TYPESCRIPT
         on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
     })
     lspconfig.zls.setup({ -- RUST
