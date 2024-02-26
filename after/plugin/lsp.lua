@@ -46,7 +46,7 @@ else
     lsp_format.setup()
 
 
-    require('java').setup()
+    -- require('java').setup()
     local lspconfig = require('lspconfig')
 
     -- LspConfig/Languages -------------------------------------------------------------------------

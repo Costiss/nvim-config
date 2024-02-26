@@ -144,5 +144,6 @@ else
             },
 
         }
+        use { 'folke/trouble.nvim' }
     end)
 end
