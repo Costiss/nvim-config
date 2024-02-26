@@ -9,7 +9,7 @@ else
     return require('packer').startup(function(use)
         use 'tpope/vim-commentary'
 
-        use 'wbthomason/packer.nvim'
+        use { 'wbthomason/packer.nvim', }
 
         use {
             'nvim-telescope/telescope.nvim', tag = '0.1.4',
@@ -96,31 +96,13 @@ else
 
         }
 
-        use {
-            "AstroNvim/astrocommunity",
-            { import = "astrocommunity.pack.java" },
-            {
-                "mfussenegger/nvim-jdtls",
-                opts = {
-                    settings = {
-                        java = {
-                            configuration = {
-                                runtimes = {
-                                    {
-                                        name = "java11",
-                                        path = "/home/gabriel-costa/.jdks/corretto-11.0.21/",
-                                    },
-                                    {
-                                        name = "java17",
-                                        path = "~/.jdks/temurin-17.0.9/",
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-            },
-        }
+        -- use {
+        --     "AstroNvim/astrocommunity",
+        --     { import = "astrocommunity.pack.java" },
+        --     {
+        --         "mfussenegger/nvim-jdtls",
+        --     },
+        -- }
 
 
         use "tpope/vim-commentary"
@@ -138,5 +120,29 @@ else
         end }
 
         use { 'cdelledonne/vim-cmake' }
+
+        use {
+            'Costiss/nvim-java',
+            branch = 'jdtls-version',
+            requires = {
+                'nvim-java/lua-async-await',
+                'nvim-java/nvim-java-core',
+                'nvim-java/nvim-java-test',
+                'nvim-java/nvim-java-dap',
+                'MunifTanjim/nui.nvim',
+                'neovim/nvim-lspconfig',
+                'mfussenegger/nvim-dap',
+                {
+                    'williamboman/mason.nvim',
+                    opts = {
+                        registries = {
+                            'github:mason-org/mason-registry',
+                            'github:nvim-java/mason-registry',
+                        },
+                    },
+                }
+            },
+
+        }
     end)
 end

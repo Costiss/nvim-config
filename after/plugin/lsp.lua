@@ -43,16 +43,21 @@ else
 
     -- LSPs Setups ---------------------------------------------------------------------------------------------------
     local lsp_format = require('lsp-format')
-    lsp_format.setup({
-        tab_width = 4,
-    })
+    lsp_format.setup()
 
+
+    require('java').setup()
     local lspconfig = require('lspconfig')
 
     -- LspConfig/Languages -------------------------------------------------------------------------
     -- lspconfig.rust_analyzer.setup({ -- RUST
     --     on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
     -- })
+
+
+    lspconfig.jdtls.setup({ -- JDTLS
+        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+    })
 
     lspconfig.kotlin_language_server.setup({ -- KOTLIN
         on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
