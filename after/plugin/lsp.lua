@@ -50,13 +50,36 @@ else
     local lspconfig = require('lspconfig')
 
     -- LspConfig/Languages -------------------------------------------------------------------------
-    -- lspconfig.rust_analyzer.setup({ -- RUST
-    --     on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
-    -- })
-
+    --
+    lspconfig.rust_analyzer.setup({ -- RUST
+        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end,
+        settings = {
+            ["rust-analyzer"] = {
+                imports = {
+                    granularity = {
+                        group = "module",
+                    },
+                    prefix = "self",
+                },
+                inlayHints = {
+                    enable = false
+                },
+                cargo = {
+                    buildScripts = {
+                        enable = true
+                    }
+                },
+                procMacro = {
+                    enable = true
+                },
+            }
+        }
+    })
 
     lspconfig.jdtls.setup({ -- JDTLS
-        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end,
+        settings = {
+        }
     })
 
     lspconfig.kotlin_language_server.setup({ -- KOTLIN
