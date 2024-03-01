@@ -78,12 +78,43 @@ else
 
     lspconfig.jdtls.setup({ -- JDTLS
         on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end,
+        --java.jdt.ls.vmargs
         settings = {
+            java = {
+                jdt = {
+                    ls = {
+                        vmargs = {
+                            "-XX:+UseParallelGC",
+                            "-XX:GCTimeRatio=4",
+                            "-XX:AdaptiveSizePolicyWeight=90",
+                            "-Dsun.zip.disableMemoryMapping=true",
+                            "-Djava.import.generatesMetadataFilesAtProjectRoot=false",
+                            "-Xmx1G",
+                            "-Xms100m",
+                        }
+                    }
+                }
+            }
         }
     })
 
     lspconfig.kotlin_language_server.setup({ -- KOTLIN
-        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end,
+        settings = {
+            kotlin = {
+                java = {
+                    opts = {
+                        "-XX:+UseParallelGC",
+                        "-XX:GCTimeRatio=4",
+                        "-XX:AdaptiveSizePolicyWeight=90",
+                        "-Dsun.zip.disableMemoryMapping=true",
+                        "-Djava.import.generatesMetadataFilesAtProjectRoot=false",
+                        "-Xmx1G",
+                        "-Xms100m",
+                    },
+                }
+            }
+        }
     })
 
     lspconfig.vtsls.setup({ -- TYPESCRIPT
