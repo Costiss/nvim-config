@@ -3,7 +3,7 @@ if vim.g.vscode then
 else
     local lsp = require('lsp-zero')
 
-
+    vim.g.editorconfig = true
     lsp.preset('recommended')
 
     lsp.ensure_installed({
@@ -117,10 +117,11 @@ else
         }
     })
 
-    lspconfig.vtsls.setup({ -- TYPESCRIPT
+    lspconfig.vtsls.setup({ -- TS
+        --      LSP wrapper around the TypeScript extension bundled with VSCode.
         on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
     })
-    lspconfig.zls.setup({ -- RUST
+    lspconfig.zls.setup({ -- ZIG
         on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
     })
     lspconfig.gopls.setup({ -- GOLANG
@@ -136,6 +137,7 @@ else
             }
         },
     })
+    -- TYPESCRIPT/JAVASCRIPT ------------------------------------------------------------------------------
     lspconfig.tsserver.setup({}) --TYPESCRIPT
 
     local efm_formatters = {
@@ -148,6 +150,14 @@ else
             formatStdin = true,
         },
     }
+    lspconfig.eslint.setup({
+        -- on_attach = function(client, bufnr)
+        --     require("lsp-format").on_attach(client, bufnr)
+        -- end,
+        eslint = {
+            autoFixOnSave = true
+        }
+    })
 
     lspconfig.efm.setup({
         on_attach = function(client, bufnr)
@@ -177,6 +187,7 @@ else
             },
         },
     })
+    ---------------------------------------------------------------------------------------
     lspconfig.lua_ls.setup({ -- LUA
         on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
     })
@@ -279,5 +290,7 @@ else
         virtual_text = true
     })
 
+
+    require("editorconfig")
     -- ordinary Neovim
 end
