@@ -50,7 +50,16 @@ else
     local lspconfig = require('lspconfig')
 
     -- LspConfig/Languages -------------------------------------------------------------------------
-    --
+
+
+    lspconfig.gleam.setup({
+        cmd = { "gleam", "lsp" },
+        filetypes = { "gleam" },
+        on_attach = function(client)
+            print("glam started")
+        end
+    })
+
     lspconfig.rust_analyzer.setup({ -- RUST
         on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end,
         settings = {
@@ -186,6 +195,10 @@ else
                 html = { efm_formatters.prettierd },
             },
         },
+    })
+
+    lspconfig.jsonls.setup({ -- JSON
+        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
     })
     ---------------------------------------------------------------------------------------
     lspconfig.lua_ls.setup({ -- LUA

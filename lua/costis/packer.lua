@@ -122,7 +122,7 @@ else
         use { 'cdelledonne/vim-cmake' }
 
         use {
-            'Costiss/nvim-java',
+            'nvim-java/nvim-java',
             branch = 'jdtls-version',
             requires = {
                 'nvim-java/lua-async-await',
@@ -145,5 +145,6 @@ else
 
         }
         use { 'folke/trouble.nvim' }
+        use { 'gleam-lang/gleam.vim' }
     end)
 end
