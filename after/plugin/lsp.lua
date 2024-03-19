@@ -1,19 +1,38 @@
 if vim.g.vscode then
     -- VSCode extension
 else
-    local lsp = require('lsp-zero')
-
+    require("editorconfig")
     vim.g.editorconfig = true
-    lsp.preset('recommended')
 
+    local lsp = require('lsp-zero')
+    lsp.nvim_workspace()
+    lsp.preset('recommended')
     lsp.ensure_installed({
         'tsserver',
-        'eslint',
+        'eslint-lsp',
+        'prettier',
+        'efm',
+        'prismals',
+        'volar',
+        'vtsls',
         'rust_analyzer',
         'gopls',
-        'efm'
+        'clangd',
+        'tailwindcss',
+        'html-lsp',
+        'json-lsp',
+        'docker_compose_language_service',
+        'dockerls',
+        'terraformls',
+        'tflint',
+        'lua_ls',
+        'kotlin_language_server',
+        'ktlint',
+        'jdtls',
+        'java-test',
+        'java-debug-adapter',
+        'zls',
     })
-
 
     require("mason").setup()
     require("mason-lspconfig").setup({
@@ -51,17 +70,19 @@ else
 
     -- LspConfig/Languages -------------------------------------------------------------------------
 
-
+    -- GLEAM ----------------------------------------------
     lspconfig.gleam.setup({
         cmd = { "gleam", "lsp" },
         filetypes = { "gleam" },
-        on_attach = function(client)
-            print("glam started")
+        on_attach = function(client, bufnr)
+            require("lsp-format").on_attach(client, bufnr)
         end
     })
-
-    lspconfig.rust_analyzer.setup({ -- RUST
-        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end,
+    -- RUST ---------------------------------------------------------------------------------------
+    lspconfig.rust_analyzer.setup({
+        on_attach = function(client, bufnr)
+            require("lsp-format").on_attach(client, bufnr)
+        end,
         settings = {
             ["rust-analyzer"] = {
                 imports = {
@@ -84,10 +105,11 @@ else
             }
         }
     })
-
-    lspconfig.jdtls.setup({ -- JDTLS
-        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end,
-        --java.jdt.ls.vmargs
+    -- JAVA --------------------------------------------------------------------------------------
+    lspconfig.jdtls.setup({
+        on_attach = function(client, bufnr)
+            require("lsp-format").on_attach(client, bufnr)
+        end,
         settings = {
             java = {
                 jdt = {
@@ -106,9 +128,11 @@ else
             }
         }
     })
-
-    lspconfig.kotlin_language_server.setup({ -- KOTLIN
-        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end,
+    -- KOTLIN -----------------------------------------------------------------------------------
+    lspconfig.kotlin_language_server.setup({
+        on_attach = function(client, bufnr)
+            require("lsp-format").on_attach(client, bufnr)
+        end,
         settings = {
             kotlin = {
                 java = {
@@ -125,16 +149,17 @@ else
             }
         }
     })
-
-    lspconfig.vtsls.setup({ -- TS
-        --      LSP wrapper around the TypeScript extension bundled with VSCode.
-        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+    -- ZiG LANG -------------------------------------------------------------------------------
+    lspconfig.zls.setup({
+        on_attach = function(client, bufnr)
+            require("lsp-format").on_attach(client, bufnr)
+        end
     })
-    lspconfig.zls.setup({ -- ZIG
-        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
-    })
-    lspconfig.gopls.setup({ -- GOLANG
-        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end,
+    -- GO LANG --------------------------------------------------------------------------------
+    lspconfig.gopls.setup({
+        on_attach = function(client, bufnr)
+            require("lsp-format").on_attach(client, bufnr)
+        end,
         settings = {
             gopls = {
                 analyses = {
@@ -147,27 +172,69 @@ else
         },
     })
     -- TYPESCRIPT/JAVASCRIPT ------------------------------------------------------------------------------
-    lspconfig.tsserver.setup({}) --TYPESCRIPT
-
-    local efm_formatters = {
-        prettier = {
-            formatCommand = './node_modules/.bin/prettier',
-            rootMarkers = { 'package.json' },
+    local formatters = {
+        eslint_d = {
+            formatCommand = 'eslint_d --stdin --fix-to-stdout',
+            formatStdin = true,
         },
         prettierd = {
             formatCommand = 'prettierd ${INPUT}',
             formatStdin = true,
-        },
+        }
     }
+
     lspconfig.eslint.setup({
-        -- on_attach = function(client, bufnr)
-        --     require("lsp-format").on_attach(client, bufnr)
-        -- end,
-        eslint = {
-            autoFixOnSave = true
+        on_attach = function(client, bufnr)
+            require("lsp-format").on_attach(client, bufnr)
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                buffer = bufnr,
+                command = "EslintFixAll",
+            })
+        end,
+        settings = {
+            eslint = {
+                enable = true,
+                format = { enable = true },
+                packageManager = "npm",
+                autoFixOnSave = true,
+                codeActionsOnSave = {
+                    mode = "all",
+                    rules = { "!debugger", "!no-only-tests/*" },
+                },
+                lintTask = {
+                    enable = true,
+                },
+            },
         }
     })
-
+    lspconfig.tsserver.setup({
+        settings = {
+            typescript = {
+                format = {
+                    enable = false,
+                }
+            },
+            javascript = {
+                format = {
+                    enable = false,
+                }
+            }
+        }
+    })
+    lspconfig.vtsls.setup({
+        settings = {
+            typescript = {
+                format = {
+                    enable = false,
+                }
+            },
+            javascript = {
+                format = {
+                    enable = false,
+                }
+            }
+        }
+    })
     lspconfig.efm.setup({
         on_attach = function(client, bufnr)
             require("lsp-format").on_attach(client, bufnr)
@@ -186,72 +253,71 @@ else
         },
         settings = {
             languages = {
-                typescript = { efm_formatters.prettierd },
-                typescriptreact = { efm_formatters.prettierd },
-                javascript = { efm_formatters.prettierd },
-                javascriptreact = { efm_formatters.prettierd },
-                json = { efm_formatters.prettierd },
-                css = { efm_formatters.prettierd },
-                html = { efm_formatters.prettierd },
+                -- typescript = { formatters.prettierd },
+                -- typescriptreact = { formatters.prettierd },
+                -- javascript = { formatters.prettierd },
+                -- javascriptreact = { formatters.prettierd },
+                json = { formatters.prettierd },
+                css = { formatters.prettierd },
+                html = { formatters.prettierd },
             },
         },
     })
-
-    lspconfig.jsonls.setup({ -- JSON
-        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+    -- JSON LS -----------------------------------------------------------------------------
+    lspconfig.jsonls.setup({
+        on_attach = function(client, bufnr)
+            require("lsp-format").on_attach(client, bufnr)
+        end
     })
-    ---------------------------------------------------------------------------------------
-    lspconfig.lua_ls.setup({ -- LUA
-        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+    -- LUA ----------------------------------------------------------------------------------
+    lspconfig.lua_ls.setup({
+        on_attach = function(client, bufnr)
+            require("lsp-format").on_attach(client, bufnr)
+        end
     })
-    lspconfig.clangd.setup({ -- C / C ++
-        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+    -- C/C++ --------------------------------------------------------------------------------
+    lspconfig.clangd.setup({
+        on_attach = function(client, bufnr)
+            require("lsp-format").on_attach(client, bufnr)
+        end
     })
-    -- LspConfig/HTML-CSS -----------------------------------------------------------------------
-    lspconfig.html.setup({ -- HTML
+    -- HTML/CSS -----------------------------------------------------------------------------
+    lspconfig.html.setup({
         on_attach = function(client, bufnr)
             require("lsp-format").on_attach(client, bufnr)
             require("lsp-format").filetypes_map.html = 'prettier'
         end
     })
     lspconfig.tailwindcss.setup({ -- TAILWIND
-        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+        on_attach = function(client, bufnr)
+            require("lsp-format").on_attach(client, bufnr)
+        end
     })
-    -- LspConfig/CI-CD
+    -- CI/CD --------------------------------------------------------------------------------
     lspconfig.dockerls.setup({ -- DOCKER
-        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+        on_attach = function(client, bufnr)
+            require("lsp-format").on_attach(client, bufnr)
+        end
     })
     lspconfig.docker_compose_language_service.setup({ -- DOCKER COMPOSE
-        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+        on_attach = function(client, bufnr)
+            require("lsp-format").on_attach(client, bufnr)
+        end
     })
     lspconfig.terraformls.setup({ -- TERRAFORM
-        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+        on_attach = function(client, bufnr)
+            require("lsp-format").on_attach(client, bufnr)
+        end
     })
 
-    -- LspConfig/JS ECOSSYSTEM -------------------------------------------------------------------
-    -- lspconfig.eslint.setup({ -- ESLINT
-    --     on_attach = function(client, bufnr)
-    --         require("lsp-format").on_attach(client, bufnr)
-
-    --         vim.api.nvim_create_autocmd("BufWritePre", {
-    --             buffer = bufnr,
-    --             command = "EslintFixAll",
-    --         })
-    --     end
-    -- })
+    -- JS ECOSSYSTEM -----------------------------------------------------------------------
     lspconfig.prismals.setup({ -- PRISMA ORM
         on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
     })
-    lspconfig.volar.setup({ -- VOLAR
+    lspconfig.volar.setup({ -- VUE
         on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
     })
     -- End LSPs Setups -- ---------------------------------------------------------------------------------------------
-
-    -- Fix Undefined global 'vim'
-    lsp.nvim_workspace()
-
-
-
 
     local cmp = require('cmp')
     local cmp_select = { behavior = cmp.SelectBehavior.Select }
@@ -263,15 +329,12 @@ else
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.close(),
     })
-
     cmp_mappings['<Tab>'] = nil
     cmp_mappings['<S-Tab>'] = nil
-
     lsp.setup_nvim_cmp({
         preselect = 1,
         mapping = cmp_mappings
     })
-
     lsp.set_preferences({
         suggest_lsp_servers = false,
         sign_icons = {
@@ -281,10 +344,8 @@ else
             info = 'I'
         }
     })
-
     lsp.on_attach(function(client, bufnr)
         local opts = { buffer = bufnr, remap = false }
-
         vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
         vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
         vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
@@ -296,14 +357,8 @@ else
         vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
         vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
     end)
-
     lsp.setup()
-
     vim.diagnostic.config({
         virtual_text = true
     })
-
-
-    require("editorconfig")
-    -- ordinary Neovim
 end
