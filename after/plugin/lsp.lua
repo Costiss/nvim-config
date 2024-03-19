@@ -237,7 +237,12 @@ else
     })
     lspconfig.efm.setup({
         on_attach = function(client, bufnr)
-            require("lsp-format").on_attach(client, bufnr)
+            if client.name == 'eslint' then
+                client.server_capabilities.documentFormattingProvider = false
+                client.server_capabilities.documentRangeFormattingProvider = false
+            else
+                require('lsp-format').on_attach(client, bufnr)
+            end
         end,
         init_options = {
             documentFormatting = true,
@@ -253,10 +258,10 @@ else
         },
         settings = {
             languages = {
-                -- typescript = { formatters.prettierd },
-                -- typescriptreact = { formatters.prettierd },
-                -- javascript = { formatters.prettierd },
-                -- javascriptreact = { formatters.prettierd },
+                typescript = { formatters.prettierd },
+                typescriptreact = { formatters.prettierd },
+                javascript = { formatters.prettierd },
+                javascriptreact = { formatters.prettierd },
                 json = { formatters.prettierd },
                 css = { formatters.prettierd },
                 html = { formatters.prettierd },

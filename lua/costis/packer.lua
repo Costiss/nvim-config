@@ -37,11 +37,11 @@ else
 
         use("lukas-reineke/lsp-format.nvim")
 
-        use('nvim-tree/nvim-web-devicons')
 
+        use('nvim-tree/nvim-web-devicons')
         use {
             'nvim-lualine/lualine.nvim',
-            requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+            requires = { 'nvim-tree/nvim-web-devicons' }
         }
 
         use('andweeb/presence.nvim')
@@ -58,7 +58,6 @@ else
 
 
         use('nvim-tree/nvim-tree.lua')
-        use('nvim-tree/nvim-web-devicons')
 
         use {
             'Exafunction/codeium.vim',
@@ -105,7 +104,6 @@ else
         -- }
 
 
-        use "tpope/vim-commentary"
         -- packer.nvim
         use { 'smithbm2316/centerpad.nvim' }
 
