@@ -61,8 +61,11 @@ else
     })
 
     -- LSPs Setups ---------------------------------------------------------------------------------------------------
-    local lsp_format = require('lsp-format')
-    lsp_format.setup()
+    require('lsp-format').setup {
+        go = {
+            order = { "gopls", "goimports" }
+        }
+    }
 
 
     -- require('java').setup()
@@ -162,6 +165,7 @@ else
         end,
         settings = {
             gopls = {
+                completeUnimported = true,
                 analyses = {
                     unusedparams = true,
                 },
