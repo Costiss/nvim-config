@@ -8,6 +8,7 @@ else
     lsp.nvim_workspace()
     lsp.preset('recommended')
     lsp.ensure_installed({
+        'bufls',
         'tsserver',
         'eslint-lsp',
         'prettier',
@@ -29,8 +30,6 @@ else
         'kotlin_language_server',
         'ktlint',
         'jdtls',
-        'java-test',
-        'java-debug-adapter',
         'zls',
     })
 
@@ -326,7 +325,15 @@ else
     lspconfig.volar.setup({ -- VUE
         on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
     })
+
+    --- PROTOBUFFERS
+    lspconfig.bufls.setup({ -- VUE
+        on_attach = function(client, bufnr) require("lsp-format").on_attach(client, bufnr) end
+    })
+
+    -------------------------------------------------------------------------------------------------------------------
     -- End LSPs Setups -- ---------------------------------------------------------------------------------------------
+    -------------------------------------------------------------------------------------------------------------------
 
     local cmp = require('cmp')
     local cmp_select = { behavior = cmp.SelectBehavior.Select }
