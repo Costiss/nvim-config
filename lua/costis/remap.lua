@@ -58,3 +58,5 @@ end);
 
 
 vim.keymap.set("n", "<leader>z", '<cmd>Centerpad<cr>', { silent = true, noremap = true })
+vim.keymap.set("v", "p", "P")
+vim.keymap.set("n", "p", "P")
