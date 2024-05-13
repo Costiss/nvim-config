@@ -23,6 +23,10 @@ conform.setup({
 		timeout_ms = 500,
 	},
 })
+-- Save without format
+vim.keymap.set({ "n", "v" }, "<leader>s", function()
+	vim.cmd([[:noautocmd w]])
+end)
 
 local lint = require("lint")
 
