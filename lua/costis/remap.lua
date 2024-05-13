@@ -19,16 +19,11 @@ vim.keymap.set("n", "<leader>Y", [["+Y]])
 
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
-vim.keymap.set('n', 'c', '"_c', { noremap = true })
-vim.keymap.set('n', 'd', '"_d', { noremap = true })
-
-
 -- This is going to get me cancelled
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "gb", "<C-o>")
-
 
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
@@ -38,25 +33,23 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
-
 vim.keymap.set("n", "<leader><leader>", function()
-    vim.cmd("so")
+	vim.cmd("so")
 end)
 
 -- Costis --
 
-vim.keymap.set("i", "<C-BS>", "<C-W>");
+vim.keymap.set("i", "<C-BS>", "<C-W>")
 
 vim.keymap.set("n", "<C-s>", function()
-    vim.cmd("w")
-end);
-vim.keymap.set("n", "<leader>s", function()
-    vim.cmd("FormatDisable")
-    vim.cmd("w")
-    vim.cmd("FormatEnable")
-end);
+	vim.cmd("w")
+end)
+-- vim.keymap.set("n", "<leader>s", function()
+--     vim.cmd("FormatDisable")
+--     vim.cmd("w")
+--     vim.cmd("FormatEnable")
+-- end);
 
-
-vim.keymap.set("n", "<leader>z", '<cmd>Centerpad<cr>', { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>z", "<cmd>Centerpad<cr>", { silent = true, noremap = true })
 vim.keymap.set("v", "p", "P")
 vim.keymap.set("n", "p", "P")
