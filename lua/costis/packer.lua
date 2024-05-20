@@ -99,14 +99,6 @@ else
 			},
 		})
 
-		-- use {
-		--     "AstroNvim/astrocommunity",
-		--     { import = "astrocommunity.pack.java" },
-		--     {
-		--         "mfussenegger/nvim-jdtls",
-		--     },
-		-- }
-
 		-- packer.nvim
 		use({ "smithbm2316/centerpad.nvim" })
 
@@ -145,5 +137,31 @@ else
 			end,
 		})
 		use("mfussenegger/nvim-lint")
+		use({
+			"Costiss/nvim-java",
+			requires = {
+				"nvim-java/lua-async-await",
+				"nvim-java/nvim-java-refactor",
+				"nvim-java/nvim-java-core",
+				"nvim-java/nvim-java-test",
+				"nvim-java/nvim-java-dap",
+				"MunifTanjim/nui.nvim",
+				"neovim/nvim-lspconfig",
+				"mfussenegger/nvim-dap",
+				{
+					"williamboman/mason.nvim",
+					config = function()
+						require("mason").setup({
+							registries = {
+								"github:nvim-java/mason-registry",
+								"github:mason-org/mason-registry",
+							},
+						})
+					end,
+				},
+			},
+		})
+
+		-- use("mfussenegger/nvim-jdtls")
 	end)
 end
