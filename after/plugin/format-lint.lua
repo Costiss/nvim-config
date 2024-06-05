@@ -17,6 +17,7 @@ conform.setup({
 		go = { "goimports", "gofmt" },
 		elixir = { "lexical" },
 		xml = { "prettierd" },
+		kotlin = { "ktlint" },
 		-- python = { "isort", "black" },
 	},
 	format_on_save = {

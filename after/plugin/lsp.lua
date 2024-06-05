@@ -24,6 +24,7 @@ local lsps = {
 	"dockerls",
 	"terraformls",
 	"tflint",
+	"kotlin_language_server",
 	"lua_ls",
 	"jdtls",
 	"zls",
