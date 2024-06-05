@@ -48,6 +48,19 @@ lspconfig.gleam.setup({
 	end,
 })
 
+lspconfig.lua_ls.setup({
+	on_attach = function(client, bufnr)
+		require("lsp-format").on_attach(client, bufnr)
+	end,
+	settings = {
+		Lua = {
+			diagnostics = {
+				globals = { "vim" },
+			},
+		},
+	},
+})
+
 lspconfig.eslint.setup({
 	on_attach = function(client, bufnr)
 		require("lsp-format").on_attach(client, bufnr)
@@ -181,7 +194,9 @@ lsp.on_attach(function(client, bufnr)
 		vim.lsp.buf.signature_help()
 	end, opts)
 end)
+
 vim.diagnostic.config({
 	virtual_text = true,
 })
+
 lsp.setup()
