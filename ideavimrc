@@ -1,273 +1,91 @@
-" cloned from https://github.com/JetBrains/ideavim/discussions/303?sort=top#discussioncomment-7664118
+" Leader key
+let mapleader = " "
 
-" vim settings
-set scrolloff=5
-set history=1000
+" LSP-related key mappings
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap K :action QuickJavaDoc<CR>
+nnoremap <leader>vws :action GotoSymbol<CR>
+nnoremap <leader>vd :action ShowErrorDescription<CR>
+nnoremap [d :action GotoNextError<CR>
+nnoremap ]d :action GotoPreviousError<CR>
+nnoremap <leader>. :action ShowIntentionActions<CR>
+nnoremap <leader>vrr :action FindUsages<CR>
+nnoremap <leader>vrn :action RenameElement<CR>
+inoremap <C-h> <ESC>:action ShowParameterInfo<CR>i
 
-" status bar
-set showmode
+" Search-related key mappings
+nnoremap <C-p> :action GotoFile<CR>
+nnoremap <C-f> :action GotoFile<CR>
+nnoremap <leader>ps :action Find<CR>
+nnoremap <leader>pg :action FindInPath<CR>
 
-" leader
-map <space> <nop>
-let mapleader="\<space>"
+" Buffer and window navigation
+nnoremap <leader>pv :action ShowProjectView<CR>
 
-" find and replace
-set hlsearch
+" Visual mode text movement
+vnoremap K :m '<-2<CR>gv=gv
+vnoremap J :m '>+1<CR>gv=gv
+
+" Normal mode enhancements
+nnoremap J mzJ`z
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Clipboard operations
+xnoremap <leader>p "_dP
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+nnoremap <leader>Y "+Y
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+
+" Miscellaneous
+inoremap <C-c> <ESC>
+nnoremap Q <nop>
+nnoremap gb <C-o>
+
+nnoremap <C-k> :action NextHighlightedError<CR>
+nnoremap <C-j> :action PreviousHighlightedError<CR>
+nnoremap <leader>k :action NextTab<CR>
+nnoremap <leader>j :action PreviousTab<CR>
+
+nnoremap <leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
+nnoremap <leader>x :!chmod +x %<CR>
+
+nnoremap <leader><leader> :action SourceRoot<CR>
+
+" Costis specific mappings
+inoremap <C-BS> <C-W>
+nnoremap <C-s> :w<CR>
+
+" Plugin-specific
+nnoremap <leader>z :action CenterLine<CR>
+vnoremap p P
+nnoremap p P
+
+" IDE-specific configurations
+set number
+set relativenumber
+
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set smartindent
+set nowrap
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+set nohlsearch
 set incsearch
-set ignorecase
-set smartcase
-set gdefault
-nmap <leader>nh :noh<CR>
+set termguicolors
+set scrolloff=8
+set signcolumn=yes
+set isfname+=@-@
+set updatetime=50
+set colorcolumn=80
 
-" ideavim settings
-set ideajoin
-set ideamarks
-set idearefactormode=normal
-set ideastatusicon=gray
-
-" better HJKL
-map H ^
-map L $
-map J }
-map K {
-
-" better escape
-imap jk <Esc>
-
-" location
-nmap <C-i> <Action>(Back)
-nmap <C-o> <Action>(Forward)
-
-" buffer (buffer < window < tab)
-nmap <leader>xx <Action>(CloseContent)
-nmap <leader>xa <Action>(CloseAllEditors)
-nmap <leader>xo <Action>(CloseAllEditorsButActive)
-nmap <leader>xp <Action>(CloseAllUnpinnedEditors)
-
-" window
-nmap <C-Tab> <Action>(PreviousTab)
-nmap <Tab> <Action>(NextTab)
-nmap <leader>p <Action>(PinActiveEditorTab)
-
-nmap <leader>1 <Action>(GoToTab1)
-nmap <leader>2 <Action>(GoToTab2)
-nmap <leader>3 <Action>(GoToTab3)
-nmap <leader>4 <Action>(GoToTab4)
-nmap <leader>5 <Action>(GoToTab5)
-nmap <leader>6 <Action>(GoToTab6)
-nmap <leader>7 <Action>(GoToTab7)
-nmap <leader>8 <Action>(GoToTab8)
-nmap <leader>9 <Action>(GoToTab9)
-
-" tab
-map <leader>sh <Action>(MoveTabLeft)
-map <leader>sj <Action>(MoveTabDown)
-map <leader>sk <Action>(MoveTabUp)
-map <leader>sl <Action>(MoveTabRight)
-map <leader>sH <Action>(SplitHorizontally)
-map <leader>sV <Action>(SplitVertically)
-
-nmap <C-p> <Action>(JumpToLastWindow)
-nmap <M-i> <Action>(PrevSplitter)
-nmap <M-o> <Action>(NextSplitter)
-nmap <C-k> <C-w>k
-nmap <C-j> <C-w>j
-nmap <C-h> <C-w>h
-nmap <C-l> <C-w>l
-
-nmap <leader>ww <Action>(HideAllWindows)
-nmap <leader>wk <Action>(StretchSplitToTop)
-nmap <leader>wj <Action>(StretchSplitToBottom)
-nmap <leader>wh <Action>(StretchSplitToLeft)
-nmap <leader>wl <Action>(StretchSplitToRight)
-nmap <leader>wm <Action>(MaximizeEditorInSplit)
-nmap <leader>wu <Action>(UnsplitAll)
-
-" menu
-nmap <leader>mm <Action>(MainMenu)
-nmap <leader>ma <Action>(AnalyzeMenu)
-nmap <leader>mb <Action>(BuildMenu)
-nmap <leader>mc <Action>(CodeMenu)
-nmap <leader>mf <Action>(FindMenuGroup)
-nmap <leader>mg <Action>(GoToMenu)
-nmap <leader>ms <Action>(ScopeViewPopupMenu)
-nmap <leader>mt <Action>(EditorTabPopupMenu)
-nmap <leader>mw <Action>(ToolWindowsGroup)
-
-" file
-nmap <leader>of <Action>(OpenFile)
-nmap <leader>yp <Action>(CopyAbsolutePath)
-nmap <leader>rf <Action>(RecentFiles)
-nmap <leader>rl <Action>(RecentLocations)
-nmap <leader>rp <Action>(ManageRecentProjects)
-nmap <leader>sh <Action>(LocalHistory.ShowHistory)
-nmap <leader>sf <Action>(ShowFilePath)
-nmap <leader>si <Action>(SelectIn)
-nmap <leader>fp <Action>(FindInPath)
-nmap <leader>rp <Action>(ReplaceInPath)
-nmap <leader>sw <Action>($SearchWeb)
-
-" tag
-nmap <leader>fu <Action>(FindUsages)
-nmap <leader>fs <Action>(FileStructurePopup)
-nmap <leader>su <Action>(ShowUsages)
-nmap <leader>hl <Action>(HighlightUsagesInFile)
-nmap <leader>qp <Action>(QuickPreview)
-nmap <leader>qd <Action>(QuickDefinition)
-nmap <leader>qD <Action>(QuickTypeDefinition)
-
-" code
-map <leader>c <Action>(CommentByLineComment)
-map <leader>C <Action>(CommentByBlockComment)
-nmap <leader>qf <Action>(ShowIntentionActions)
-nmap <leader>se <Action>(ShowErrorDescription)
-nmap <leader>om <Action>(OverrideMethods)
-nmap <leader>im <Action>(ImplementMethods)
-nmap <leader>fc <Action>(ReformatCode)
-nmap <leader>ic <Action>(InspectCode)
-nmap <leader>so <Action>(SelectAllOccurrences)
-nmap <leader>gc <Action>(Generate)
-nmap <leader>gt <Action>(GoToTest)
-
-" run
-nmap <leader>rc <Action>(ContextRun)
-nmap <leader>rx<Action>(chooseRunConfiguration)
-nmap <leader>rr <Action>(Rerun)
-nmap <leader>rt <Action>(RunTests)
-nmap <leader>rs <Action>(Stop)
-
-" debug
-nmap <leader>dc <Action>(ContextDebug)
-nmap <leader>dx <Action>(Debug)
-nmap <leader>db <Action>(ToggleLineBreakpoint)
-nmap <leader>de <Action>(EditBreakpoint)
-nmap <leader>dv <Action>(ViewBreakpoints)
-
-" build
-nmap <leader>bb <Action>(BuildMenu)
-
-" refactor
-nmap <leader>rn <Action>(RenameElement)
-nmap <leader>re <Action>(Refactorings.QuickListPopupAction)
-nmap <leader>uw <Action>(Unwrap)
-nmap <leader>sw <Action>(SurroundWith)
-nmap <leader>sd <Action>(SafeDelete)
-nmap <leader>oi <Action>(OptimizeImports)
-
-" hierarchy
-nmap <leader>hc <Action>(CallHierarchy)
-nmap <leader>hm <Action>(MethodHierarchy)
-nmap <leader>ht <Action>(TypeHierarchy)
-
-" collapse
-nmap zz <Action>(ExpandCollapseToggleAction)
-nmap za <Action>(CollapseAllRegions)
-nmap zA <Action>(ExpandAllRegions)
-
-" zen
-nmap <leader>z <Action>(ToggleZenMode)
-
-" []
-nmap [b <Action>(PreviousTab)
-nmap ]b <Action>(NextTab)
-nmap [g <Action>(GotoPreviousError)
-nmap ]g <Action>(GotoNextError)
-nmap [u <Action>(GotoPrevElementUnderCaretUsage)
-nmap ]u <Action>(GotoNextElementUnderCaretUsage)
-nmap [o <Action>(PreviousOccurence)
-nmap ]o <Action>(NextOccurence)
-nmap [m <Action>(MethodUp)
-nmap ]m <Action>(MethodDown)
-nmap [c <Action>(JumpToLastChange)
-nmap ]c <Action>(JumpToNextChange)
-
-" goto
-nmap <leader>a <Action>(GotoAction)
-nmap ga <Action>(GotoAction)
-nmap gc <Action>(GotoClass)
-nmap gf <Action>(GotoFile)
-nmap gs <Action>(GotoSymbol)
-nmap gt <Action>(GoToTest)
-nmap gT <Action>(TextSearchAction)
-nmap go <Action>(GotoSuperMethod)
-nmap gd <Action>(GotoDeclaration)
-nmap gD <Action>(GotoTypeDeclaration)
-nmap gi <Action>(GotoImplementation)
-nmap gI <Action>(QuickImplementations)
-nmap gn <Action>(ShowNavBar)
-
-" terminal
-nmap <leader>tt <Action>(ActivateTerminalToolWindow)
-nmap <leader>tc <Action>(Terminal.OpenInTerminal)
-
-" bookmark
-nmap mm <Action>(ToggleBookmark)
-nmap ms <Action>(ShowBookmarks)
-
-" todo
-nmap <leader>to <Action>(ActivateTODOToolWindow)
-
-" task
-nmap <leader>ts <Action>(tasks.goto)
-
-" idea join
-nmap \\jl <Action>(EditorJoinLines)
-
-" gist
-nmap \\cg <Action>(Github.Create.Gist)
-
-" vcs
-nmap <leader>v <Action>(VcsGroups)
-
-" open IdeaVim settings
-nmap \\v <Action>(VimActions)
-
-" text-object (bundle plugin)
-set vim-paragraph-motion
-set textobj-indent
-set textobj-entire
-set argtextobj
-
-" jump-motion (required idea plugin: IdeaVim-EasyMotion, AceJump)
-set easymotion
-
-" highlight yank (bundle plugin)
-set highlightedyank
-let g:highlightedyank_highlight_duration = "1000"
-let g:highlightedyank_highlight_color = "rgba(57, 197, 187, 155)"
-
-" translation (required idea plugin: Translation)
-nmap \\tt <Action>($ShowTranslationDialogAction)
-nmap \\ts <Action>($TranslateTextComponent)
-nmap \\ti <Action>($InclusiveTranslateAction)
-nmap \\te <Action>($ExclusiveTranslateAction)
-
-" string manipulate (required idea plugin: String Manipulation)
-nmap <leader>ss <Action>(osmedile.intellij.stringmanip.PopupChoiceAction)
-
-" code screenshot (required idea plugin: Code Screenshots)
-nmap <leader>cs <Action>(one.util.ideaplugin.screenshoter.CopyImageAction)
-
-" surround (bundle plugin)
-" usage: https://github.com/tpope/vim-surround
-set surround
-
-" exchange (bundle plugin)
-" usage: https://github.com/tommcdo/vim-exchange
-set exchange
-
-" nerdtree (bundle plugin)
-set NERDTree
-
-" replace with register (bundle plugin)
-" usage: https://github.com/vim-scripts/ReplaceWithRegister
-set ReplaceWithRegister
-
-" continuous shift
-xnoremap < <gv
-xnoremap > >gv
-
-" alias
-nmap <C-a> ggVG"+y
-
-
+" Ensure Git integration is properly configured in IntelliJ IDEA
