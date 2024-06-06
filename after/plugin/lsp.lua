@@ -11,10 +11,9 @@ local lsps = {
 	"bufls",
 	"tsserver",
 	"eslint",
-	"efm",
 	"prismals",
 	"volar",
-	"vtsls",
+	-- "vtsls",
 	"rust_analyzer",
 	"gopls",
 	"clangd",
@@ -40,6 +39,16 @@ for _, server in ipairs(lsps) do
 		on_attach = require("lsp-format").on_attach,
 	})
 end
+
+lspconfig.rescriptls.setup({
+	on_attach = function(client, bufnr)
+		require("lsp-format").on_attach(client, bufnr)
+	end,
+})
+
+lspconfig.tsserver.setup({
+	on_attach = nil,
+})
 
 lspconfig.gleam.setup({
 	cmd = { "gleam", "lsp" },
