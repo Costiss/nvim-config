@@ -40,6 +40,18 @@ for _, server in ipairs(lsps) do
 	})
 end
 
+lspconfig.rust_analyzer.setup({
+	on_attach = function(client, bufnr)
+		require("lsp-format").on_attach(client, bufnr)
+	end,
+})
+
+lspconfig.kotlin_language_server.setup({
+	on_attach = function(client, bufnr)
+		require("lsp-format").on_attach(client, bufnr)
+	end,
+})
+
 lspconfig.rescriptls.setup({
 	on_attach = function(client, bufnr)
 		require("lsp-format").on_attach(client, bufnr)
