@@ -28,7 +28,7 @@ nnoremap <leader>vd :action ShowErrorDescription<CR>
 nnoremap [d :action GotoNextError<CR>
 nnoremap ]d :action GotoPreviousError<CR>
 nnoremap <leader>. :action ShowIntentionActions<CR>
-nnoremap <leader>vrr :action FindUsages<CR>
+nnoremap <leader>vrr :action GotoDeclaration<CR>
 nnoremap <leader>vrn :action RenameElement<CR>
 inoremap <C-h> <ESC>:action ShowParameterInfo<CR>i
 
@@ -132,4 +132,4 @@ nmap <leader>y "+y
 vmap <leader>y "+y
 
 command! Run :action Run
-
+command! FindFile :action SelectInProjectView
