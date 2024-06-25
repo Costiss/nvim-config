@@ -40,6 +40,25 @@ for _, server in ipairs(lsps) do
 	})
 end
 
+lspconfig.zls.setup({
+	on_attach = function(client, bufnr)
+		require("lsp-format").on_attach(client, bufnr)
+	end,
+	settings = {
+		zig = {
+			zls = {
+				inlayHintsShowVariableTypeHints = false,
+				inlayHintsShowParameterName = false,
+				inlayHintsShowBuiltin = false,
+				inlayHintsExcludeSingleArgument = false,
+				enableArgumentPlaceholders = false,
+				completionLabelDetails = false,
+				completionsWithReplace = false,
+			},
+		},
+	},
+})
+
 lspconfig.rust_analyzer.setup({
 	on_attach = function(client, bufnr)
 		require("lsp-format").on_attach(client, bufnr)
