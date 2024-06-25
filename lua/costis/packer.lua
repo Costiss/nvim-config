@@ -54,23 +54,35 @@ return require("packer").startup(function(use)
 
 	use("nvim-tree/nvim-tree.lua")
 
+	-- use({
+	-- 	"Exafunction/codeium.vim",
+	-- 	tag = "1.6.13",
+	-- config = function()
+	-- Change '<C-g>' here to any keycode you like.
+	-- vim.keymap.set("i", "<tab>", function()
+	-- 	return vim.fn["codeium#Accept"]()
+	-- end, { expr = true })
+	-- vim.keymap.set("i", "<c-;>", function()
+	-- 	return vim.fn["codeium#CycleCompletions"](1)
+	-- end, { expr = true })
+	-- vim.keymap.set("i", "<c-,>", function()
+	-- 	return vim.fn["codeium#CycleCompletions"](-1)
+	-- end, { expr = true })
+	-- vim.keymap.set("i", "<c-x>", function()
+	-- 	return vim.fn["codeium#Clear"]()
+	-- end, { expr = true })
+	-- end,
+	-- })
+
+	--- Tabby plugin
+	--- ~/.tabby-client/agent/config.tom - Client Config
 	use({
-		"Exafunction/codeium.vim",
-		tag = "1.6.13",
+		"TabbyML/vim-tabby",
 		config = function()
-			-- Change '<C-g>' here to any keycode you like.
-			vim.keymap.set("i", "<tab>", function()
-				return vim.fn["codeium#Accept"]()
-			end, { expr = true })
-			vim.keymap.set("i", "<c-;>", function()
-				return vim.fn["codeium#CycleCompletions"](1)
-			end, { expr = true })
-			vim.keymap.set("i", "<c-,>", function()
-				return vim.fn["codeium#CycleCompletions"](-1)
-			end, { expr = true })
-			vim.keymap.set("i", "<c-x>", function()
-				return vim.fn["codeium#Clear"]()
-			end, { expr = true })
+			vim.g.tabby_node_binary = "~/.nvm/versions/node/v22.2.0/bin/node"
+			vim.g.tabby_trigger_mode = "auto"
+			vim.g.tabby_keybinding_accept = "<tab>"
+			vim.g.tabby_keybinding_trigger_or_dismiss = "<c-x>"
 		end,
 	})
 
