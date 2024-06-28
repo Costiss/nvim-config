@@ -18,6 +18,7 @@ conform.setup({
 		elixir = { "lexical" },
 		xml = { "prettierd" },
 		kotlin = { "ktlint" },
+		swift = { "swiftformat" },
 		-- python = { "isort", "black" },
 	},
 	format_on_save = {

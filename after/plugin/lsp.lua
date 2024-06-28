@@ -33,6 +33,15 @@ local lsps = {
 lsp.ensure_installed(lsps)
 
 local lspconfig = require("lspconfig")
+local configs = require("lspconfig.configs")
+
+configs.swift = {
+	default_config = {
+		cmd = { "sourcekit-lsp" },
+		root_dir = lspconfig.util.root_pattern(".git"),
+		filetypes = { "swift" },
+	},
+}
 
 for _, server in ipairs(lsps) do
 	lspconfig[server].setup({
@@ -84,6 +93,14 @@ lspconfig.tsserver.setup({
 lspconfig.gleam.setup({
 	cmd = { "gleam", "lsp" },
 	filetypes = { "gleam" },
+	on_attach = function(client, bufnr)
+		require("lsp-format").on_attach(client, bufnr)
+	end,
+})
+
+lspconfig.swift.setup({
+	cmd = { "sourcekit-lsp" },
+	filetypes = { "swift" },
 	on_attach = function(client, bufnr)
 		require("lsp-format").on_attach(client, bufnr)
 	end,
