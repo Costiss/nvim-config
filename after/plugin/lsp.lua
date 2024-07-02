@@ -63,6 +63,8 @@ lspconfig.zls.setup({
 				enableArgumentPlaceholders = false,
 				completionLabelDetails = false,
 				completionsWithReplace = false,
+				enableInlayHints = false,
+				enableSnippets = false,
 			},
 		},
 	},
