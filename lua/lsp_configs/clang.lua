@@ -10,6 +10,7 @@ return function(on_attach)
 			if vim.tbl_contains(disabled_filetypes, filetype) then
 				vim.lsp.stop_client(client.id)
 			else
+				require("lsp-format").on_attach(client, bufnr)
 				on_attach(client, bufnr)
 			end
 		end,

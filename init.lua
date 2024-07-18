@@ -1,3 +1,1 @@
 require("costis")
-require("configs")
-

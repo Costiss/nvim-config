@@ -211,6 +211,12 @@ _G.packer_plugins = {
     path = "/home/gabriel-costa/.local/share/nvim/site/pack/packer/start/nvim-lint",
     url = "https://github.com/mfussenegger/nvim-lint"
   },
+  ["nvim-lsp-file-operations"] = {
+    config = { "\27LJ\2\nA\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\24lsp-file-operations\frequire\0" },
+    loaded = true,
+    path = "/home/gabriel-costa/.local/share/nvim/site/pack/packer/start/nvim-lsp-file-operations",
+    url = "https://github.com/antosha417/nvim-lsp-file-operations"
+  },
   ["nvim-lspconfig"] = {
     loaded = true,
     path = "/home/gabriel-costa/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
@@ -232,7 +238,7 @@ _G.packer_plugins = {
     url = "https://github.com/nkrkv/nvim-treesitter-rescript"
   },
   ["nvim-ts-autotag"] = {
-    config = { "\27LJ\2\né\1\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\topts\1\0\1\topts\0\1\0\3\18enable_rename\2\17enable_close\2\26enable_close_on_slash\1\nsetup\20nvim-ts-autotag\frequire\0" },
+    config = { "\27LJ\2\né\1\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\topts\1\0\1\topts\0\1\0\3\26enable_close_on_slash\1\17enable_close\2\18enable_rename\2\nsetup\20nvim-ts-autotag\frequire\0" },
     loaded = true,
     path = "/home/gabriel-costa/.local/share/nvim/site/pack/packer/start/nvim-ts-autotag",
     url = "https://github.com/windwp/nvim-ts-autotag"
@@ -319,9 +325,13 @@ time([[Config for autoclose.nvim]], false)
 time([[Config for conform.nvim]], true)
 try_loadstring("\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fconform\frequire\0", "config", "conform.nvim")
 time([[Config for conform.nvim]], false)
+-- Config for: nvim-lsp-file-operations
+time([[Config for nvim-lsp-file-operations]], true)
+try_loadstring("\27LJ\2\nA\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\24lsp-file-operations\frequire\0", "config", "nvim-lsp-file-operations")
+time([[Config for nvim-lsp-file-operations]], false)
 -- Config for: nvim-ts-autotag
 time([[Config for nvim-ts-autotag]], true)
-try_loadstring("\27LJ\2\né\1\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\topts\1\0\1\topts\0\1\0\3\18enable_rename\2\17enable_close\2\26enable_close_on_slash\1\nsetup\20nvim-ts-autotag\frequire\0", "config", "nvim-ts-autotag")
+try_loadstring("\27LJ\2\né\1\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\topts\1\0\1\topts\0\1\0\3\26enable_close_on_slash\1\17enable_close\2\18enable_rename\2\nsetup\20nvim-ts-autotag\frequire\0", "config", "nvim-ts-autotag")
 time([[Config for nvim-ts-autotag]], false)
 -- Config for: vim-tabby
 time([[Config for vim-tabby]], true)
