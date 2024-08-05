@@ -2,6 +2,10 @@ local lspconfig = require("lspconfig")
 
 return function(on_attach)
 	lspconfig.jdtls.setup({
+		on_attach = function(client, bufnr)
+			require("lsp-format").on_attach(client, bufnr)
+			on_attach(client, bufnr)
+		end,
 		cmd = {
 			"jdtls",
 			"--jvm-arg=-javaagent:" .. vim.fn.expand("$MASON/share/jdtls/lombok.jar"),
