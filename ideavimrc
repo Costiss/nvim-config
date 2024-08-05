@@ -131,5 +131,7 @@ set colorcolumn=80
 nmap <leader>y "+y
 vmap <leader>y "+y
 
-command! Run :action Run
+command! Run :action RunClass
 command! FindFile :action SelectInProjectView
+
+
