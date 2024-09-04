@@ -15,7 +15,7 @@ conform.setup({
 		graphql = { "prettierd" },
 		lua = { "stylua" },
 		go = { "goimports", "gofmt" },
-		elixir = { "lexical" },
+		-- elixir = { "lexical" },
 		xml = { "prettierd" },
 		kotlin = { "ktlint" },
 		swift = { "swiftformat" },

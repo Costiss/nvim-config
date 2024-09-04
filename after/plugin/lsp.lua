@@ -15,6 +15,7 @@ local function on_attach(client, bufnr)
 	local diagnostic = vim.diagnostic
 
 	keymap("n", "gd", lsp_buf.definition, opts)
+	keymap("n", "gtd", lsp_buf.type_definition, opts)
 	keymap("n", "K", lsp_buf.hover, opts)
 	keymap("n", "<leader>vws", lsp_buf.workspace_symbol, opts)
 	keymap("n", "<leader>vd", diagnostic.open_float, opts)

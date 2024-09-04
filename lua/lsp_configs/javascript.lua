@@ -9,6 +9,11 @@ return function(on_attach)
 		on_attach = function(client, bufnr)
 			on_attach(client, bufnr)
 		end,
+		settings = {
+			vtsls = {
+				autoUseWorkspaceTsdk = true, -- Automatically use the workspace TypeScript version
+			},
+		},
 	})
 
 	lspconfig.volar.setup({
@@ -33,6 +38,7 @@ return function(on_attach)
 		end,
 		settings = {
 			eslint = {
+				executable = "eslint_d",
 				enable = true,
 				format = { enable = true },
 				packageManager = "npm",
