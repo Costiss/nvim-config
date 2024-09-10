@@ -20,6 +20,7 @@ conform.setup({
 		kotlin = { "ktlint" },
 		swift = { "swiftformat" },
 		-- python = { "isort", "black" },
+		sql = { "sql_formatter" },
 	},
 	format_on_save = {
 		lsp_fallback = true,
