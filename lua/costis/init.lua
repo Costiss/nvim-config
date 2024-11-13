@@ -7,3 +7,5 @@ vim.api.nvim_set_keymap("x", "<Leader>c", ":Commentary<CR>", { noremap = true, s
 vim.api.nvim_create_user_command("Json", function()
 	vim.cmd("set filetype=json")
 end, {})
+
+vim.g["test#runner_commands"] = { "Vitest" }

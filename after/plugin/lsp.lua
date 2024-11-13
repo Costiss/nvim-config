@@ -33,6 +33,7 @@ end
 vim.diagnostic.config({ virtual_text = true })
 
 -- Load LSP configs
+require("lsp_configs.swift")(on_attach)
 require("lsp_configs.clang")(on_attach)
 require("lsp_configs.elixir")(on_attach)
 require("lsp_configs.gleam")(on_attach)
@@ -44,7 +45,7 @@ require("lsp_configs.rust")(on_attach)
 require("lsp_configs.terraform")(on_attach)
 require("lsp_configs.zig")(on_attach)
 require("lsp_configs.golang")(on_attach)
--- require("lsp_configs.swift")(on_attach)
+require("lsp_configs.robot")(on_attach)
 
 -- Setup nvim-cmp
 
