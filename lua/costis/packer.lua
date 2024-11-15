@@ -32,7 +32,7 @@ return require("packer").startup(function(use)
 
 	use("tpope/vim-fugitive")
 
-	use("lukas-reineke/lsp-format.nvim")
+	-- use("lukas-reineke/lsp-format.nvim")
 
 	use("nvim-tree/nvim-web-devicons")
 	use({

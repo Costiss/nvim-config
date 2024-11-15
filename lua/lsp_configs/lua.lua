@@ -1,17 +1,19 @@
 local lspconfig = require("lspconfig")
+local conform = require("conform")
 
 return function(on_attach)
-	lspconfig.lua_ls.setup({
-		on_attach = function(client, bufnr)
-			require("lsp-format").on_attach(client, bufnr)
-			on_attach(client, bufnr)
-		end,
-		settings = {
-			Lua = {
-				diagnostics = {
-					globals = { "vim" },
-				},
-			},
-		},
-	})
+    conform.formatters_by_ft.lua = {
+        "stylua",
+    }
+
+    lspconfig.lua_ls.setup({
+        on_attach = on_attach,
+        settings = {
+            Lua = {
+                diagnostics = {
+                    globals = { "vim" },
+                },
+            },
+        },
+    })
 end

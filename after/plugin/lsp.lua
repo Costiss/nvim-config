@@ -1,6 +1,5 @@
 local lsp = require("lsp-zero")
 require("mason").setup()
-require("lsp-format").setup({})
 require("editorconfig")
 vim.g.editorconfig = true
 

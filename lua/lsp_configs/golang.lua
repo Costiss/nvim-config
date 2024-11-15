@@ -1,10 +1,13 @@
 local lspconfig = require("lspconfig")
+local conform = require("conform")
 
 return function(on_attach)
-	lspconfig.gopls.setup({
-		on_attach = function(client, bufnr)
-			require("lsp-format").on_attach(client, bufnr)
-			on_attach(client, bufnr)
-		end,
-	})
+    conform.formatters_by_ft.kotlin = {
+        "goimports",
+        "gofmt",
+    }
+
+    lspconfig.gopls.setup({
+        on_attach = on_attach,
+    })
 end
