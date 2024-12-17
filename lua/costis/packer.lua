@@ -200,4 +200,9 @@ return require("packer").startup(function(use)
 			"stevearc/dressing.nvim", -- optional for vim.ui.select
 		},
 	})
+
+	use({
+		"scalameta/nvim-metals",
+		requires = { "nvim-lua/plenary.nvim" }, -- Add dependency
+	})
 end)
