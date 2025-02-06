@@ -3,6 +3,7 @@ local config = require("lspconfig.configs")
 
 return function(on_attach)
 	--https://github.com/lasorda/protobuf-language-server
+	--brew install bufbuild/buf/buf
 
 	config.protobuf_language_server = {
 		default_config = {

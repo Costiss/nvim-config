@@ -16,6 +16,7 @@ conform.setup({
 		xml = { "prettierd" },
 		sql = { "sql_formatter" },
 		scala = { "scalafmt" },
+		proto = { "buf" },
 		-- elixir = { "lexical" },
 		-- python = { "isort", "black" },
 	},
