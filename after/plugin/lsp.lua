@@ -47,6 +47,7 @@ require("lsp_configs.golang")(on_attach)
 require("lsp_configs.robot")(on_attach)
 require("lsp_configs.metals")(on_attach)
 require("lsp_configs.gradle")(on_attach)
+require("lsp_configs.proto")(on_attach)
 
 -- Setup nvim-cmp
 
