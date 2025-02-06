@@ -59,7 +59,7 @@ return require("packer").startup(function(use)
 		tag = "1.6.13",
 		config = function()
 			-- Change '<C-g>' here to any keycode you like.
-			vim.keymap.set("i", "<tab>", function()
+			vim.keymap.set("i", "<C-g>", function()
 				return vim.fn["codeium#Accept"]()
 			end, { expr = true })
 			vim.keymap.set("i", "<c-;>", function()
@@ -76,15 +76,15 @@ return require("packer").startup(function(use)
 
 	--- Tabby plugin
 	--- ~/.tabby-client/agent/config.tom - Client Config
-	use({
-		"TabbyML/vim-tabby",
-		config = function()
-			vim.g.tabby_node_binary = "~/.nvm/versions/node/v22.2.0/bin/node"
-			vim.g.tabby_trigger_mode = "auto"
-			vim.g.tabby_keybinding_accept = "<tab>"
-			vim.g.tabby_keybinding_trigger_or_dismiss = "<c-x>"
-		end,
-	})
+	-- use({
+	-- 	"TabbyML/vim-tabby",
+	-- 	config = function()
+	-- 		vim.g.tabby_node_binary = "~/.nvm/versions/node/v22.2.0/bin/node"
+	-- 		vim.g.tabby_trigger_mode = "auto"
+	-- 		vim.g.tabby_keybinding_accept = "<tab>"
+	-- 		vim.g.tabby_keybinding_trigger_or_dismiss = "<c-x>"
+	-- 	end,
+	-- })
 
 	use({
 		"VonHeikemen/lsp-zero.nvim",
@@ -204,5 +204,29 @@ return require("packer").startup(function(use)
 	use({
 		"scalameta/nvim-metals",
 		requires = { "nvim-lua/plenary.nvim" }, -- Add dependency
+	})
+
+	use({
+		"kdheepak/lazygit.nvim",
+		-- optional for floating window border decoration
+		requires = {
+			"nvim-lua/plenary.nvim",
+		},
+	})
+
+	-- Add this to your Packer plugins
+	use({
+		"kndndrj/nvim-dbee", -- DBUi plugin
+		requires = { "MunifTanjim/nui.nvim" }, -- Required dependency
+		run = function()
+			-- Optional: Install/update the external binary (if needed)
+			require("dbee").install()
+		end,
+		config = function()
+			-- Basic setup (customize options if needed)
+			require("dbee").setup()
+			-- Optional: Map keybindings (example)
+			vim.keymap.set("n", "<leader>db", "<cmd>DBeeToggle<cr>", { desc = "Toggle DBUi" })
+		end,
 	})
 end)

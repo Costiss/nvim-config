@@ -8,4 +8,5 @@ vim.api.nvim_create_user_command("Json", function()
 	vim.cmd("set filetype=json")
 end, {})
 
-vim.g["test#runner_commands"] = { "Vitest" }
+vim.g["test#runner_commands"] = { "Vitest", "Jest" }
+
