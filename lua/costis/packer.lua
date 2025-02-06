@@ -213,20 +213,4 @@ return require("packer").startup(function(use)
 			"nvim-lua/plenary.nvim",
 		},
 	})
-
-	-- Add this to your Packer plugins
-	use({
-		"kndndrj/nvim-dbee", -- DBUi plugin
-		requires = { "MunifTanjim/nui.nvim" }, -- Required dependency
-		run = function()
-			-- Optional: Install/update the external binary (if needed)
-			require("dbee").install()
-		end,
-		config = function()
-			-- Basic setup (customize options if needed)
-			require("dbee").setup()
-			-- Optional: Map keybindings (example)
-			vim.keymap.set("n", "<leader>db", "<cmd>DBeeToggle<cr>", { desc = "Toggle DBUi" })
-		end,
-	})
 end)
