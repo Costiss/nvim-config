@@ -5,16 +5,16 @@
 -- ordinary Neovim
 return require("packer").startup(function(use)
 	--use("tpope/vim-commentary")
+	use("JoosepAlviste/nvim-ts-context-commentstring")
 	use({
 		"numToStr/Comment.nvim",
 		config = function()
-			require("Comment").setup()
+			--require("Comment").setup()
 			require("Comment").setup({
 				pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
 			})
 		end,
 	})
-	use("JoosepAlviste/nvim-ts-context-commentstring")
 
 	use({ "wbthomason/packer.nvim" })
 
