@@ -39,6 +39,34 @@ return {
 
 			-- Custom on_attach function
 			local function on_attach(client, bufnr)
+				-- Set custom diagnostic symbols
+				local signs = { Error = "✘", Warn = "▲", Hint = "⚑", Info = "" }
+
+				for type, icon in pairs(signs) do
+					local hl = "DiagnosticSign" .. type
+					vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+				end
+
+				-- Configure diagnostic settings
+				vim.diagnostic.config({
+					virtual_text = {
+						prefix = "●", -- Could be '●', '▎', 'x'
+						spacing = 4,
+						source = "always",
+						format = function(diagnostic)
+							return string.format("%s (%s)", diagnostic.message, diagnostic.source)
+						end,
+					},
+					signs = true,
+					underline = true,
+					update_in_insert = false,
+					severity_sort = true,
+					float = {
+						border = "rounded",
+						source = "always",
+					},
+				})
+
 				local opts = { buffer = bufnr, remap = false }
 				local keymap = vim.keymap.set
 				local lsp_buf = vim.lsp.buf
@@ -135,37 +163,6 @@ return {
 					},
 				},
 			})
-
-			-- Your custom LSP settings here
-			lsp.on_attach(function(client, bufnr)
-				-- Set custom diagnostic symbols
-				local signs = { Error = "✘", Warn = "▲", Hint = "⚑", Info = "" }
-
-				for type, icon in pairs(signs) do
-					local hl = "DiagnosticSign" .. type
-					vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-				end
-
-				-- Configure diagnostic settings
-				vim.diagnostic.config({
-					virtual_text = {
-						prefix = "●", -- Could be '●', '▎', 'x'
-						spacing = 4,
-						source = "always",
-						format = function(diagnostic)
-							return string.format("%s (%s)", diagnostic.message, diagnostic.source)
-						end,
-					},
-					signs = true,
-					underline = true,
-					update_in_insert = false,
-					severity_sort = true,
-					float = {
-						border = "rounded",
-						source = "always",
-					},
-				})
-			end)
 
 			lsp.setup()
 		end,
