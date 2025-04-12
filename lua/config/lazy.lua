@@ -33,3 +33,8 @@ require("lazy").setup({
 	-- automatically check for plugin update
 	checker = { enabled = true },
 })
+
+vim.keymap.set("n", "<leader>z", function()
+	-- Open Lazy UI
+	require("lazy").show()
+end, { noremap = true, silent = true })
