@@ -1,26 +1,31 @@
 local lspconfig = require("lspconfig")
 local conform = require("conform")
+local mason = require("mason")
 
 return function(on_attach)
+	local formatters = {
+		"prettierd",
+		"eslint_d",
+	}
+	mason.setup({
+		ensure_installed = {
+			"vtsls",
+			"eslint_d",
+			"prettierd",
+			"eslint",
+			"prisma",
+			"volar",
+		},
+	})
+	conform.formatters_by_ft.javascript = formatters
+	conform.formatters_by_ft.typescript = formatters
+	conform.formatters_by_ft.typesriptreact = formatters
+	conform.formatters_by_ft.javascriptreact = formatters
+	conform.formatters_by_ft.prisma = { "prisma" }
+
 	-- lspconfig.tsserver.setup({
 	-- 	on_attach = nil,
 	-- })
-	conform.formatters_by_ft.javascript = {
-		"prettierd",
-		"eslint_d",
-	}
-	conform.formatters_by_ft.typescript = {
-		"prettierd",
-		"eslint_d",
-	}
-	conform.formatters_by_ft.typesriptreact = {
-		"prettierd",
-		"eslint_d",
-	}
-	conform.formatters_by_ft.javascriptreact = {
-		"prettierd",
-		"eslint_d",
-	}
 
 	lspconfig.vtsls.setup({
 		on_attach = on_attach,
@@ -41,23 +46,23 @@ return function(on_attach)
 			on_attach(client, bufnr)
 		end,
 		--cmd = { "bunx", "--bun", "vscode-eslint-language-server", "--stdio" },
-		--cmd = { "bunx", "--bun", "vscode-eslint-language-server", "--stdio" },
 		root_dir = lspconfig.util.root_pattern(".git"),
 		settings = {
-			-- eslint = {
-			-- 	executable = "$HOME/.bun/bin/eslint_d",
-			-- 	enable = true,
-			-- 	format = { enable = true },
-			-- 	packageManager = "bun",
-			-- 	autoFixOnSave = true,
-			-- 	codeActionsOnSave = {
-			-- 		mode = "all",
-			-- 		rules = { "!debugger", "!no-only-tests/*" },
-			-- 	},
-			-- 	lintTask = {
-			-- 		enable = true,
-			-- 	},
-			-- },
+			eslint = {
+				enable = true,
+				executable = vim.env.HOME .. "/.bun/bin/eslint_d",
+				format = { enable = false },
+				packageManager = "bun",
+				autoFixOnSave = true,
+				codeActionsOnSave = {
+					enable = false,
+					mode = "all",
+					rules = { "!debugger", "!no-only-tests/*" },
+				},
+				lintTask = {
+					enable = true,
+				},
+			},
 		},
 	})
 
