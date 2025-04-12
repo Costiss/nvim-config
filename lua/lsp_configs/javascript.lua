@@ -3,10 +3,6 @@ local conform = require("conform")
 local mason = require("mason")
 
 return function(on_attach)
-	local formatters = {
-		"prettierd",
-		"eslint_d",
-	}
 	mason.setup({
 		ensure_installed = {
 			"vtsls",
@@ -17,6 +13,10 @@ return function(on_attach)
 			"volar",
 		},
 	})
+	local formatters = {
+		"prettierd",
+		"eslint_d",
+	}
 	conform.formatters_by_ft.javascript = formatters
 	conform.formatters_by_ft.typescript = formatters
 	conform.formatters_by_ft.typesriptreact = formatters
