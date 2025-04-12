@@ -20,7 +20,15 @@ local function on_attach(client, bufnr)
 	keymap("n", "<leader>vd", diagnostic.open_float, opts)
 	keymap("n", "[d", diagnostic.goto_next, opts)
 	keymap("n", "]d", diagnostic.goto_prev, opts)
-	keymap("n", "<leader>.", lsp_buf.code_action, opts)
+	keymap("n", "<leader>.", function()
+		vim.lsp.buf.code_action({
+			context = {
+				diagnostics = vim.lsp.diagnostic.get_line_diagnostics(),
+				triggerKind = vim.lsp.protocol.CodeActionTriggerKind.Invoked,
+			},
+		})
+	end, opts)
+
 	keymap("n", "<leader>vrr", lsp_buf.references, opts)
 	keymap("n", "gA", lsp_buf.references, opts)
 	keymap("n", "<leader>vrn", lsp_buf.rename, opts)
