@@ -1,9 +1,26 @@
 local lspconfig = require("lspconfig")
+local conform = require("conform")
 
 return function(on_attach)
 	-- lspconfig.tsserver.setup({
 	-- 	on_attach = nil,
 	-- })
+	conform.formatters_by_ft.javascript = {
+		"prettierd",
+		"eslint_d",
+	}
+	conform.formatters_by_ft.typescript = {
+		"prettierd",
+		"eslint_d",
+	}
+	conform.formatters_by_ft.typesriptreact = {
+		"prettierd",
+		"eslint_d",
+	}
+	conform.formatters_by_ft.javascriptreact = {
+		"prettierd",
+		"eslint_d",
+	}
 
 	lspconfig.vtsls.setup({
 		on_attach = on_attach,
@@ -22,29 +39,25 @@ return function(on_attach)
 	lspconfig.eslint.setup({
 		on_attach = function(client, bufnr)
 			on_attach(client, bufnr)
-			vim.api.nvim_create_autocmd("BufWritePre", {
-				buffer = bufnr,
-				command = "EslintFixAll",
-			})
 		end,
 		--cmd = { "bunx", "--bun", "vscode-eslint-language-server", "--stdio" },
 		--cmd = { "bunx", "--bun", "vscode-eslint-language-server", "--stdio" },
 		root_dir = lspconfig.util.root_pattern(".git"),
 		settings = {
-			eslint = {
-				executable = "bunx --bun eslint_d",
-				enable = true,
-				format = { enable = true },
-				packageManager = "npm",
-				autoFixOnSave = true,
-				codeActionsOnSave = {
-					mode = "all",
-					rules = { "!debugger", "!no-only-tests/*" },
-				},
-				lintTask = {
-					enable = true,
-				},
-			},
+			-- eslint = {
+			-- 	executable = "$HOME/.bun/bin/eslint_d",
+			-- 	enable = true,
+			-- 	format = { enable = true },
+			-- 	packageManager = "bun",
+			-- 	autoFixOnSave = true,
+			-- 	codeActionsOnSave = {
+			-- 		mode = "all",
+			-- 		rules = { "!debugger", "!no-only-tests/*" },
+			-- 	},
+			-- 	lintTask = {
+			-- 		enable = true,
+			-- 	},
+			-- },
 		},
 	})
 
