@@ -5,6 +5,7 @@ if vim.api.nvim_call_function('has', {'nvim-0.5'}) ~= 1 then
   return
 end
 
+
 vim.api.nvim_command('packadd packer.nvim')
 
 local no_errors, error_msg = pcall(function()

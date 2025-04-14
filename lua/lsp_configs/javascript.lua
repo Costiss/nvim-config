@@ -33,6 +33,11 @@ return function(on_attach)
 		settings = {
 			vtsls = {
 				autoUseWorkspaceTsdk = true, -- Automatically use the workspace TypeScript version
+				typescript = {
+					preferences = {
+						organizeImports = true,
+					},
+				},
 			},
 		},
 	})

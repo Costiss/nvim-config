@@ -25,6 +25,7 @@ vim.g.maplocalleader = "\\"
 require("lazy").setup({
 	spec = {
 		-- import your plugins
+		--{ "LazyVim/LazyVim", import = "lazyvim.plugins" },
 		{ import = "plugins" },
 	},
 	-- Configure any other settings here. See the documentation for more details.
@@ -33,8 +34,3 @@ require("lazy").setup({
 	-- automatically check for plugin update
 	checker = { enabled = true },
 })
-
-vim.keymap.set("n", "<leader>z", function()
-	-- Open Lazy UI
-	require("lazy").show()
-end, { noremap = true, silent = true })

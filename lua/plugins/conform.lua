@@ -22,6 +22,7 @@ return {
 					sql = { "sql_formatter" },
 					scala = { "scalafmt" },
 					proto = { "buf" },
+					go = { "goimports", "gofmt" },
 					-- elixir = { "lexical" },
 					-- python = { "isort", "black" },
 				},
