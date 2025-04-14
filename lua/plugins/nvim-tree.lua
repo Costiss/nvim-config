@@ -3,6 +3,12 @@ return {
 		"nvim-tree/nvim-tree.lua",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
+			local api = require("nvim-tree.api")
+
+			vim.keymap.set("n", "<leader>t", function()
+				api.tree.toggle()
+			end)
+
 			require("nvim-tree").setup({
 				filters = {
 					git_ignored = false,
