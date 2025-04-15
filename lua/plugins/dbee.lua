@@ -11,7 +11,12 @@ return {
 			require("dbee").install("go")
 		end,
 		config = function()
-			require("dbee").setup(--[[optional config]])
+			local dbee = require("dbee")
+			dbee.setup(--[[optional config]])
+
+			vim.keymap.set("n", "<leader>db", function()
+				dbee.toggle()
+			end, { noremap = true, silent = true })
 		end,
 	},
 }
