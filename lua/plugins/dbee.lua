@@ -14,7 +14,7 @@ return {
 			local dbee = require("dbee")
 			dbee.setup(--[[optional config]])
 
-			vim.keymap.set("n", "<leader>db", function()
+			vim.keymap.set("n", "<leader>DB", function()
 				dbee.toggle()
 			end, { noremap = true, silent = true })
 		end,
