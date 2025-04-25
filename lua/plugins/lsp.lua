@@ -117,6 +117,7 @@ return {
 			--require("lsp_configs.proto")(on_attach)
 			require("lsp_configs.docker")(on_attach)
 			require("lsp_configs.python")(on_attach)
+			require("lsp_configs.json")(on_attach)
 
 			-- Setup nvim-cmp
 
