@@ -22,6 +22,7 @@ local function set_filetype(pattern, filetype)
 	})
 end
 
+vim.opt.splitright = true
+
 set_filetype({ "docker-compose.yml" }, "yaml.docker-compose")
 set_filetype({ "docker-compose.yaml" }, "yaml.docker-compose")
-
