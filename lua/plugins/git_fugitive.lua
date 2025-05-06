@@ -6,7 +6,6 @@ return {
 				vim.cmd.Git({
 					mods = {
 						vertical = true,
-						split = "aboveleft",
 					},
 				})
 			end)
