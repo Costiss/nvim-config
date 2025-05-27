@@ -4,9 +4,9 @@ return {
 		config = function()
 			vim.keymap.set("n", "<leader>gs", function()
 				vim.cmd.Git({
-					mods = {
-						vertical = true,
-					},
+					-- mods = {
+					-- 	vertical = true,
+					-- },
 				})
 			end)
 		end,
