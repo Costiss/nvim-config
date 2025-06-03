@@ -16,4 +16,5 @@ return function(on_attach)
 	}
 
 	lspconfig.protobuf_language_server.setup({ on_attach = on_attach })
+	lspconfig.buf_ls.setup({ on_attach = on_attach })
 end

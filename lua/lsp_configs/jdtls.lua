@@ -4,7 +4,7 @@ return function(on_attach)
 	lspconfig.jdtls.setup({
 		on_attach = on_attach,
 		cmd_env = {
-			JAVA_HOME = vim.fn.expand("$HOME/.sdkman/candidates/java/21.0.4-graal/"),
+			JAVA_HOME = vim.fn.expand("$HOME/.sdkman/candidates/java/21.0.6-jbr/"),
 		},
 		cmd = {
 			"jdtls",
