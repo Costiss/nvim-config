@@ -1,10 +1,10 @@
 local lspconfig = require("lspconfig")
-local mason_install = require("costis.helpers.mason_install")
+-- local mason_install = require("helpers.mason_install")
 
 return function(on_attach)
-	mason_install({
-		"clangd",
-	})
+	-- mason_install({
+	-- 	"clangd",
+	-- })
 
 	lspconfig.clangd.setup({
 		on_attach = function(client, bufnr)

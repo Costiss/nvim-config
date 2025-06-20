@@ -1,16 +1,15 @@
-local lspconfig = require("lspconfig")
-local conform = require("conform")
-local mason_install = require("lua.costis.helpers.mason_install")
+local lspconfig = require("lspconfig") local conform = require("conform")
+-- local mason_install = require("lua.costis.helpers.mason_install")
 
 return function(on_attach)
-	mason_install({
-		"vtsls",
-		"prisma-language-server",
-		"eslint-lsp",
-		"prettierd",
-		"eslint_d",
-		--"vue-language-server",
-	})
+	-- mason_install({
+	-- 	"vtsls",
+	-- 	"prisma-language-server",
+	-- 	"eslint-lsp",
+	-- 	"prettierd",
+	-- 	"eslint_d",
+	-- 	--"vue-language-server",
+	-- })
 
 	local formatters = {
 		"prettierd",

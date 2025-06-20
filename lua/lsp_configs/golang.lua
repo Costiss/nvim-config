@@ -1,12 +1,12 @@
 local lspconfig = require("lspconfig")
 local conform = require("conform")
-local mason_install = require("costis.helpers.mason_install")
+-- local mason_install = require("costis.helpers.mason_install")
 
 return function(on_attach)
-	mason_install({
-		"gopls",
-		"goimports",
-	})
+	-- mason_install({
+	-- 	"gopls",
+	-- 	"goimports",
+	-- })
 
 	conform.formatters_by_ft.kotlin = {
 		"goimports",

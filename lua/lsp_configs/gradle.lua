@@ -1,11 +1,11 @@
 local lspconfig = require("lspconfig")
-local mason_install = require("costis.helpers.mason_install")
+-- local mason_install = require("costis.helpers.mason_install")
 
 return function(on_attach)
-	mason_install({
-		"groovy-language-server",
-		"gradle-language-server",
-	})
+	-- mason_install({
+	-- 	"groovy-language-server",
+	-- 	"gradle-language-server",
+	-- })
 
 	lspconfig.groovyls.setup({
 		on_attach = on_attach,
