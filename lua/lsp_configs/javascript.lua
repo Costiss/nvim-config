@@ -1,18 +1,17 @@
 local lspconfig = require("lspconfig")
 local conform = require("conform")
-local mason = require("mason")
+local mason_install = require("lua.costis.helpers.mason_install")
 
 return function(on_attach)
-	mason.setup({
-		ensure_installed = {
-			"vtsls",
-			"eslint_d",
-			"prettierd",
-			"eslint",
-			"prisma",
-			"volar",
-		},
+	mason_install({
+		"vtsls",
+		"prisma-language-server",
+		"eslint-lsp",
+		"prettierd",
+		"eslint_d",
+		--"vue-language-server",
 	})
+
 	local formatters = {
 		"prettierd",
 		"eslint_d",
@@ -72,34 +71,34 @@ return function(on_attach)
 	})
 
 	--:MasonInstall vue-language-server@1.8.27
-	local util = require("lspconfig.util")
-	local function get_typescript_server_path(root_dir)
-		local global_ts = vim.fn.expand("$HOME/.bun/lib/node_modules/typescript/lib")
-		-- Alternative location if installed as root:
-		-- local global_ts = '/usr/local/lib/node_modules/typescript/lib'
-		local found_ts = ""
-		local function check_dir(path)
-			found_ts = util.path.join(path, "node_modules", "typescript", "lib")
-			if util.path.exists(found_ts) then
-				return path
-			end
-		end
-		if util.search_ancestors(root_dir, check_dir) then
-			return found_ts
-		else
-			print("found global")
-			return global_ts
-		end
-	end
+	-- local util = require("lspconfig.util")
+	-- local function get_typescript_server_path(root_dir)
+	-- 	local global_ts = vim.fn.expand("$HOME/.bun/lib/node_modules/typescript/lib")
+	-- 	-- Alternative location if installed as root:
+	-- 	-- local global_ts = '/usr/local/lib/node_modules/typescript/lib'
+	-- 	local found_ts = ""
+	-- 	local function check_dir(path)
+	-- 		found_ts = util.path.join(path, "node_modules", "typescript", "lib")
+	-- 		if util.path.exists(found_ts) then
+	-- 			return path
+	-- 		end
+	-- 	end
+	-- 	if util.search_ancestors(root_dir, check_dir) then
+	-- 		return found_ts
+	-- 	else
+	-- 		print("found global")
+	-- 		return global_ts
+	-- 	end
+	-- end
 
-	lspconfig.volar.setup({
-		on_new_config = function(new_config, new_root_dir)
-			new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
-		end,
-		init_options = {
-			vue = {
-				hybridMode = false,
-			},
-		},
-	})
+	-- lspconfig.volar.setup({
+	-- 	on_new_config = function(new_config, new_root_dir)
+	-- 		new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
+	-- 	end,
+	-- 	init_options = {
+	-- 		vue = {
+	-- 			hybridMode = false,
+	-- 		},
+	-- 	},
+	-- })
 end

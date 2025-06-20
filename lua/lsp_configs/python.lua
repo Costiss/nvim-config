@@ -1,17 +1,10 @@
 local lspconfig = require("lspconfig")
-local conform = require("conform")
-local mason = require("mason")
+local mason_install = require("costis.helpers.mason_install")
 
 return function(on_attach)
-	mason.setup({
-		ensure_installed = {
-			"basedpyright",
-		},
+	mason_install({
+		"basedpyright",
 	})
-	--
-	-- conform.formatters_by_ft.python = {
-	-- 	"black",
-	-- }
 
 	lspconfig.basedpyright.setup({
 		on_attach = on_attach,

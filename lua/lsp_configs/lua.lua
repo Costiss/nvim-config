@@ -1,19 +1,25 @@
 local lspconfig = require("lspconfig")
 local conform = require("conform")
+local mason_install = require("costis.helpers.mason_install")
 
 return function(on_attach)
-    conform.formatters_by_ft.lua = {
-        "stylua",
-    }
+	mason_install({
+		"lua-language-server",
+		"stylua",
+	})
 
-    lspconfig.lua_ls.setup({
-        on_attach = on_attach,
-        settings = {
-            Lua = {
-                diagnostics = {
-                    globals = { "vim" },
-                },
-            },
-        },
-    })
+	conform.formatters_by_ft.lua = {
+		"stylua",
+	}
+
+	lspconfig.lua_ls.setup({
+		on_attach = on_attach,
+		settings = {
+			Lua = {
+				diagnostics = {
+					globals = { "vim" },
+				},
+			},
+		},
+	})
 end

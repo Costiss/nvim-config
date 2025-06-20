@@ -1,6 +1,11 @@
 local lspconfig = require("lspconfig")
+local mason_install = require("costis.helpers.mason_install")
 
 return function(on_attach)
+	mason_install({
+		"clangd",
+	})
+
 	lspconfig.clangd.setup({
 		on_attach = function(client, bufnr)
 			local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")

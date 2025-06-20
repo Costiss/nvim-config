@@ -27,7 +27,7 @@ return {
 				view = {
 					adaptive_size = false,
 					side = "left",
-					width = 45,
+					width = 30,
 					preserve_window_proportions = true,
 				},
 				git = {
