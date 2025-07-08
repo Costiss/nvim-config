@@ -9,6 +9,7 @@ return function(on_attach)
 		"eslint-lsp",
 		"prettierd",
 		"eslint_d",
+		"biome",
 		--"vue-language-server",
 	})
 
@@ -64,6 +65,21 @@ return function(on_attach)
 					rules = { "!debugger", "!no-only-tests/*" },
 				},
 				lintTask = {
+					enable = true,
+				},
+			},
+		},
+	})
+
+	lspconfig.biome.setup({
+		on_attach = on_attach,
+		root_dir = lspconfig.util.root_pattern("biome.json"),
+		settings = {
+			biome = {
+				format = {
+					enable = true,
+				},
+				lint = {
 					enable = true,
 				},
 			},
