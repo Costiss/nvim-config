@@ -10,6 +10,7 @@ return function(on_attach)
 		"prettierd",
 		"eslint_d",
 		"biome",
+		"tailwindcss-language-server",
 		--"vue-language-server",
 	})
 
@@ -84,6 +85,14 @@ return function(on_attach)
 				},
 			},
 		},
+	})
+
+	lspconfig.tailwindcss.setup({
+		on_attach = on_attach,
+	})
+
+	lspconfig.astro.setup({
+		on_attach = on_attach,
 	})
 
 	--:MasonInstall vue-language-server@1.8.27
