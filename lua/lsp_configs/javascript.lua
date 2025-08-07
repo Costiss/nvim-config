@@ -11,6 +11,7 @@ return function(on_attach)
 		"eslint_d",
 		"biome",
 		"tailwindcss-language-server",
+		"deno",
 		--"vue-language-server",
 	})
 
@@ -28,8 +29,21 @@ return function(on_attach)
 	-- 	on_attach = nil,
 	-- })
 
+	lspconfig.denols.setup({
+		on_attach = on_attach,
+		root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+	})
+
 	lspconfig.vtsls.setup({
 		on_attach = on_attach,
+		root_dir = function(fname)
+			-- Don't start vtsls if deno.json is present
+			if lspconfig.util.root_pattern("deno.json", "deno.jsonc")(fname) then
+				return nil
+			end
+			-- Use default root pattern for other cases
+			return lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git")(fname)
+		end,
 		--cmd = { "bun", "x", "--bun", "vtsls", "--stdio" },
 		settings = {
 			vtsls = {
@@ -52,7 +66,6 @@ return function(on_attach)
 			on_attach(client, bufnr)
 		end,
 		--cmd = { "bunx", "--bun", "vscode-eslint-language-server", "--stdio" },
-		root_dir = lspconfig.util.root_pattern(".git"),
 		settings = {
 			eslint = {
 				enable = true,
