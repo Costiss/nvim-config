@@ -113,6 +113,7 @@ return {
 			require("lsp_configs.python")(on_attach)
 			require("lsp_configs.json")(on_attach)
 			require("lsp_configs.dart")(on_attach)
+			require("lsp_configs.ocaml")(on_attach)
 
 			-- Setup nvim-cmp
 

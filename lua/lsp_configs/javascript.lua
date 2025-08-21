@@ -36,14 +36,8 @@ return function(on_attach)
 
 	lspconfig.vtsls.setup({
 		on_attach = on_attach,
-		root_dir = function(fname)
-			-- Don't start vtsls if deno.json is present
-			if lspconfig.util.root_pattern("deno.json", "deno.jsonc")(fname) then
-				return nil
-			end
-			-- Use default root pattern for other cases
-			return lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git")(fname)
-		end,
+		root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json"),
+		--single_file_support = false,
 		--cmd = { "bun", "x", "--bun", "vtsls", "--stdio" },
 		settings = {
 			vtsls = {

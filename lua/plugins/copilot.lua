@@ -38,7 +38,9 @@ return {
 		build = "make tiktoken", -- Only on MacOS or Linux
 		config = function()
 			require("CopilotChat").setup({
-				model = "claude-sonnet-4",
+				--model = "claude-sonnet-4",
+				model = "gpt-4.1",
+				--
 				-- sticky = {
 				-- 	"#buffers:visible",
 				-- 	"$claude-sonnet-4",
