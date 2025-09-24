@@ -4,6 +4,17 @@ return {
 		dependencies = { "mason.nvim" }, -- if you use Mason
 		config = function()
 			local conform = require("conform")
+			local mason_install = require("lsp_configs.helpers.mason_install")
+			mason_install({
+				"prettierd",
+				"biome",
+				"sql-formatter",
+				"buf",
+				"goimports",
+				"gopls",
+				"ruff",
+				"stylua",
+			})
 
 			local function has_biome_config()
 				return vim.fn.filereadable("biome.json") == 1 or vim.fn.filereadable("biome.jsonc") == 1
@@ -31,7 +42,9 @@ return {
 					proto = { "buf" },
 					go = { "goimports", "gofmt" },
 					-- elixir = { "lexical" },
-					-- python = { "isort", "black" },
+					python = { "ruff_format" },
+					lua = { "stylua" },
+					prisma = { "prisma" },
 				},
 				formatters = {
 					biome = {

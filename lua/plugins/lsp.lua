@@ -93,7 +93,6 @@ return {
 			vim.diagnostic.config({ virtual_text = true })
 
 			-- Load LSP configs
-			--require("lsp_configs.swift")(on_attach)
 			require("lsp_configs.clang")(on_attach)
 			require("lsp_configs.elixir")(on_attach)
 			require("lsp_configs.gleam")(on_attach)
@@ -106,14 +105,13 @@ return {
 			require("lsp_configs.zig")(on_attach)
 			require("lsp_configs.golang")(on_attach)
 			require("lsp_configs.robot")(on_attach)
-			--require("lsp_configs.metals")(on_attach)
 			require("lsp_configs.gradle")(on_attach)
 			require("lsp_configs.proto")(on_attach)
 			require("lsp_configs.docker")(on_attach)
 			require("lsp_configs.python")(on_attach)
 			require("lsp_configs.json")(on_attach)
 			require("lsp_configs.dart")(on_attach)
-			require("lsp_configs.ocaml")(on_attach)
+			require("lsp_configs.kube")(on_attach)
 
 			-- Setup nvim-cmp
 

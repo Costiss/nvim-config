@@ -1,5 +1,4 @@
 local lspconfig = require("lspconfig")
-local conform = require("conform")
 local mason_install = require("lsp_configs.helpers.mason_install")
 
 return function(on_attach)
@@ -14,16 +13,6 @@ return function(on_attach)
 		"deno",
 		--"vue-language-server",
 	})
-
-	local formatters = {
-		"prettierd",
-		"eslint_d",
-	}
-	conform.formatters_by_ft.javascript = formatters
-	conform.formatters_by_ft.typescript = formatters
-	conform.formatters_by_ft.typesriptreact = formatters
-	conform.formatters_by_ft.javascriptreact = formatters
-	conform.formatters_by_ft.prisma = { "prisma" }
 
 	-- lspconfig.tsserver.setup({
 	-- 	on_attach = nil,
