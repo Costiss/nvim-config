@@ -1,14 +1,13 @@
 local lspconfig = require("lspconfig")
 local mason_install = require("lsp_configs.helpers.mason_install")
 
-return function(on_attach)
+return function()
 	mason_install({
 		"lua-language-server",
 		"stylua",
 	})
 
-	lspconfig.lua_ls.setup({
-		on_attach = on_attach,
+	vim.lsp.config("lua_ls", {
 		settings = {
 			Lua = {
 				diagnostics = {
@@ -17,4 +16,6 @@ return function(on_attach)
 			},
 		},
 	})
+
+	vim.lsp.enable("lua_ls")
 end

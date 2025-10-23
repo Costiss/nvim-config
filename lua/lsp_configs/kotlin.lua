@@ -2,7 +2,7 @@ local lspconfig = require("lspconfig")
 local conform = require("conform")
 local mason_install = require("lsp_configs.helpers.mason_install")
 
-return function(on_attach)
+return function()
 	mason_install({
 		"kotlin-language-server",
 	})
@@ -11,7 +11,7 @@ return function(on_attach)
 		"ktlint",
 	}
 
-	lspconfig.kotlin_language_server.setup({
-		on_attach = on_attach,
-	})
+	vim.lsp.config("kotlin_language_server", {})
+
+	vim.lsp.enable("kotlin_language_server")
 end

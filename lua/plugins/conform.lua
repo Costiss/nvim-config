@@ -49,7 +49,7 @@ return {
 				formatters = {
 					biome = {
 						command = "biome",
-						args = { "check", "--write", "$FILENAME" }, --  ← this was the magic that fixed organizing imports
+						args = { "check", "--unsafe", "--write", "$FILENAME" }, --  ← this was the magic that fixed organizing imports
 						stdin = false,
 					},
 				},

@@ -1,20 +1,18 @@
 local lspconfig = require("lspconfig")
 local config = require("lspconfig.configs")
 
-return function(on_attach)
+return function()
 	--https://github.com/lasorda/protobuf-language-server
 	--brew install bufbuild/buf/buf
 
-	config.protobuf_language_server = {
-		default_config = {
-			cmd = { "protobuf-language-server" },
-			filetypes = { "proto", "cpp" },
-			root_dir = lspconfig.util.root_pattern(".git"),
-			single_file_support = true,
-			settings = {},
-		},
-	}
+	vim.lsp.config("protobuf_language_server", {
+		cmd = { "protobuf-language-server" },
+		filetypes = { "proto", "cpp" },
+		root_dir = require("lspconfig.util").root_pattern(".git"),
+		single_file_support = true,
+		settings = {},
+	})
 
-	lspconfig.protobuf_language_server.setup({ on_attach = on_attach })
-	lspconfig.buf_ls.setup({ on_attach = on_attach })
+	vim.lsp.enable("protobuf_language_server")
+	vim.lsp.enable("buf_ls")
 end

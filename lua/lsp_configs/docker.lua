@@ -17,11 +17,9 @@ return function(on_attach)
 	set_filetype({ "docker-compose.yml" }, "yaml.docker-compose")
 	set_filetype({ "*Dockerfile*" }, "dockerfile")
 
-	lspconfig.docker_compose_language_service.setup({
-		on_attach = on_attach,
-	})
+	vim.lsp.config("docker_compose_language_service", {})
+	vim.lsp.enable("docker_compose_language_service")
 
-	lspconfig.dockerls.setup({
-		on_attach = on_attach,
-	})
+	vim.lsp.config("dockerls", {})
+	vim.lsp.enable("dockerls")
 end

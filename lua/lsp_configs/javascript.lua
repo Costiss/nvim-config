@@ -1,7 +1,7 @@
 local lspconfig = require("lspconfig")
 local mason_install = require("lsp_configs.helpers.mason_install")
 
-return function(on_attach)
+return function()
 	mason_install({
 		"vtsls",
 		"prisma-language-server",
@@ -14,18 +14,12 @@ return function(on_attach)
 		--"vue-language-server",
 	})
 
-	-- lspconfig.tsserver.setup({
-	-- 	on_attach = nil,
-	-- })
-
-	lspconfig.denols.setup({
-		on_attach = on_attach,
-		root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+	vim.lsp.config("denols", {
+		root_dir = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc"),
 	})
 
-	lspconfig.vtsls.setup({
-		on_attach = on_attach,
-		root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json"),
+	vim.lsp.config("vtsls", {
+		root_dir = require("lspconfig.util").root_pattern("package.json", "tsconfig.json", "jsconfig.json"),
 		--single_file_support = false,
 		--cmd = { "bun", "x", "--bun", "vtsls", "--stdio" },
 		settings = {
@@ -40,14 +34,9 @@ return function(on_attach)
 		},
 	})
 
-	lspconfig.prismals.setup({
-		on_attach = on_attach,
-	})
+	vim.lsp.config("prismals", {})
 
-	lspconfig.eslint.setup({
-		on_attach = function(client, bufnr)
-			on_attach(client, bufnr)
-		end,
+	vim.lsp.config("eslint", {
 		--cmd = { "bunx", "--bun", "vscode-eslint-language-server", "--stdio" },
 		settings = {
 			eslint = {
@@ -68,9 +57,8 @@ return function(on_attach)
 		},
 	})
 
-	lspconfig.biome.setup({
-		on_attach = on_attach,
-		root_dir = lspconfig.util.root_pattern("biome.json"),
+	vim.lsp.config("biome", {
+		root_dir = require("lspconfig.util").root_pattern("biome.json"),
 		settings = {
 			biome = {
 				format = {
@@ -83,43 +71,48 @@ return function(on_attach)
 		},
 	})
 
-	lspconfig.tailwindcss.setup({
-		on_attach = on_attach,
+	vim.lsp.config("tailwindcss", {})
+
+	vim.lsp.config("astro", {})
+
+	-- :MasonInstall vue-language-server@1.8.27
+	local util = require("lspconfig.util")
+	local function get_typescript_server_path(root_dir)
+		local global_ts = vim.fn.expand("$HOME/.bun/lib/node_modules/typescript/lib")
+		-- Alternative location if installed as root:
+		-- local global_ts = '/usr/local/lib/node_modules/typescript/lib'
+		local found_ts = ""
+		local function check_dir(path)
+			found_ts = util.path.join(path, "node_modules", "typescript", "lib")
+			if util.path.exists(found_ts) then
+				return path
+			end
+		end
+		if util.search_ancestors(root_dir, check_dir) then
+			return found_ts
+		else
+			print("found global")
+			return global_ts
+		end
+	end
+
+	vim.lsp.config("volar", {
+		on_new_config = function(new_config, new_root_dir)
+			new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
+		end,
+		init_options = {
+			vue = {
+				hybridMode = false,
+			},
+		},
 	})
 
-	lspconfig.astro.setup({
-		on_attach = on_attach,
-	})
-
-	--:MasonInstall vue-language-server@1.8.27
-	-- local util = require("lspconfig.util")
-	-- local function get_typescript_server_path(root_dir)
-	-- 	local global_ts = vim.fn.expand("$HOME/.bun/lib/node_modules/typescript/lib")
-	-- 	-- Alternative location if installed as root:
-	-- 	-- local global_ts = '/usr/local/lib/node_modules/typescript/lib'
-	-- 	local found_ts = ""
-	-- 	local function check_dir(path)
-	-- 		found_ts = util.path.join(path, "node_modules", "typescript", "lib")
-	-- 		if util.path.exists(found_ts) then
-	-- 			return path
-	-- 		end
-	-- 	end
-	-- 	if util.search_ancestors(root_dir, check_dir) then
-	-- 		return found_ts
-	-- 	else
-	-- 		print("found global")
-	-- 		return global_ts
-	-- 	end
-	-- end
-
-	-- lspconfig.volar.setup({
-	-- 	on_new_config = function(new_config, new_root_dir)
-	-- 		new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
-	-- 	end,
-	-- 	init_options = {
-	-- 		vue = {
-	-- 			hybridMode = false,
-	-- 		},
-	-- 	},
-	-- })
+	vim.lsp.enable("denols")
+	vim.lsp.enable("vtsls")
+	vim.lsp.enable("prismals")
+	vim.lsp.enable("eslint")
+	vim.lsp.enable("biome")
+	vim.lsp.enable("tailwindcss")
+	vim.lsp.enable("astro")
+	-- vim.lsp.enable("volar")
 end

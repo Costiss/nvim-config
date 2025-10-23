@@ -1,17 +1,15 @@
 local lspconfig = require("lspconfig")
 local mason_install = require("lsp_configs.helpers.mason_install")
 
-return function(on_attach)
+return function()
 	mason_install({
 		"terraform-ls",
 		"tflint",
 	})
 
-	lspconfig.terraformls.setup({
-		on_attach = on_attach,
-	})
+	vim.lsp.config("terraformls", {})
+	vim.lsp.enable("terraformls")
 
-	lspconfig.tflint.setup({
-		on_attach = on_attach,
-	})
+	vim.lsp.config("tflint", {})
+	vim.lsp.enable("tflint")
 end

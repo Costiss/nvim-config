@@ -1,17 +1,16 @@
 local lspconfig = require("lspconfig")
 local mason_install = require("lsp_configs.helpers.mason_install")
 
-return function(on_attach)
+return function()
 	mason_install({
 		"groovy-language-server",
 		"gradle-language-server",
 	})
 
-	lspconfig.groovyls.setup({
-		on_attach = on_attach,
-	})
+	vim.lsp.config("groovyls", {})
 
-	lspconfig.gradle_ls.setup({
-		on_attach = on_attach,
-	})
+	vim.lsp.config("gradle_ls", {})
+
+	vim.lsp.enable("groovyls")
+	vim.lsp.enable("gradle_ls")
 end

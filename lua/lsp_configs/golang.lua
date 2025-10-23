@@ -7,7 +7,7 @@ return function(on_attach)
 		"goimports",
 	})
 
-	lspconfig.gopls.setup({
-		on_attach = on_attach,
-	})
+	vim.lsp.config("gopls", {})
+
+	vim.lsp.enable("gopls")
 end

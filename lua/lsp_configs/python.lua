@@ -1,12 +1,12 @@
 local lspconfig = require("lspconfig")
 local mason_install = require("lsp_configs.helpers.mason_install")
 
-return function(on_attach)
+return function()
 	mason_install({
 		"basedpyright",
 	})
 
-	lspconfig.basedpyright.setup({
-		on_attach = on_attach,
-	})
+	vim.lsp.config("basedpyright", {})
+
+	vim.lsp.enable("basedpyright")
 end

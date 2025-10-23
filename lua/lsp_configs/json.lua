@@ -1,12 +1,12 @@
 local lspconfig = require("lspconfig")
 local mason_install = require("lsp_configs.helpers.mason_install")
 
-return function(on_attach)
+return function()
 	mason_install({
 		"json-lsp",
 	})
 
-	lspconfig.jsonls.setup({
-		on_attach = on_attach,
-	})
+	vim.lsp.config("jsonls", {})
+
+	vim.lsp.enable("jsonls")
 end

@@ -1,4 +1,3 @@
-local lspconfig = require("lspconfig")
 local mason_install = require("lsp_configs.helpers.mason_install")
 
 return function(on_attach)
@@ -6,7 +5,7 @@ return function(on_attach)
 		"clangd",
 	})
 
-	lspconfig.clangd.setup({
+	vim.lsp.config("clangd", {
 		on_attach = function(client, bufnr)
 			local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
 
