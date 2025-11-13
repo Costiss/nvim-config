@@ -1,4 +1,3 @@
-local lspconfig = require("lspconfig")
 local mason_install = require("lsp_configs.helpers.mason_install")
 
 return function()
@@ -19,7 +18,7 @@ return function()
 	})
 
 	vim.lsp.config("vtsls", {
-		root_dir = require("lspconfig.util").root_pattern("package.json", "tsconfig.json", "jsconfig.json"),
+		-- root_dir = require("lspconfig.util").root_pattern("package.json", "tsconfig.json", "jsconfig.json"),
 		--single_file_support = false,
 		--cmd = { "bun", "x", "--bun", "vtsls", "--stdio" },
 		settings = {
@@ -58,7 +57,7 @@ return function()
 	})
 
 	vim.lsp.config("biome", {
-		root_dir = require("lspconfig.util").root_pattern("biome.json"),
+		-- root_dir = require("lspconfig.util").root_pattern("biome.json"),
 		settings = {
 			biome = {
 				format = {

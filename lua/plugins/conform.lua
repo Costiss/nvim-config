@@ -20,21 +20,62 @@ return {
 				return vim.fn.filereadable("biome.json") == 1 or vim.fn.filereadable("biome.jsonc") == 1
 			end
 
-			-- Determine formatter based on biome config presence
-			local js_formatters = has_biome_config() and { "biome", stop_after_first = true } or { "prettier" }
+			local function has_prettier_config()
+				-- Common Prettier config files
+				local prettier_configs = {
+					".prettierrc",
+					".prettierrc.json",
+					".prettierrc.js",
+					".prettierrc.cjs",
+					".prettierrc.toml",
+					".prettierrc.yaml",
+					".prettierrc.yml",
+					"prettier.config.js",
+					"prettier.config.cjs",
+				}
+
+				for _, config_file in ipairs(prettier_configs) do
+					if vim.fn.filereadable(config_file) == 1 then
+						return true
+					end
+				end
+
+				-- Also check package.json for prettier configuration
+				if vim.fn.filereadable("package.json") == 1 then
+					local package_json = vim.fn.readfile("package.json")
+					local package_content = table.concat(package_json, "\n")
+					if package_content:find('"prettier"') then
+						return true
+					end
+				end
+
+				return false
+			end
+
+			-- Determine formatter based on config presence
+			local function get_js_formatters()
+				if has_prettier_config() then
+					return { "prettierd" }
+				elseif has_biome_config() then
+					return { "biome", stop_after_first = true }
+				else
+					-- Default to biome if no configs found
+					return { "biome", stop_after_first = true }
+				end
+			end
 
 			conform.setup({
 				formatters_by_ft = {
-					typescript = js_formatters,
-					javascript = js_formatters,
-					javascriptreact = js_formatters,
-					typescriptreact = js_formatters,
+					typescript = get_js_formatters(),
+					javascript = get_js_formatters(),
+					javascriptreact = get_js_formatters(),
+					typescriptreact = get_js_formatters(),
 					markdown = { "prettierd" },
 					graphql = { "prettierd" },
 					svelte = { "prettierd" },
 					css = { "prettierd" },
 					html = { "prettierd" },
-					json = js_formatters,
+					json = get_js_formatters(),
 					yaml = { "prettierd" },
 					xml = { "prettierd" },
 					sql = { "sql_formatter" },
@@ -49,7 +90,7 @@ return {
 				formatters = {
 					biome = {
 						command = "biome",
-						args = { "check", "--unsafe", "--write", "$FILENAME" }, --  ← this was the magic that fixed organizing imports
+						args = { "check", "--unsafe", "--write", "$FILENAME" },
 						stdin = false,
 					},
 				},
