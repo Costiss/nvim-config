@@ -81,7 +81,7 @@ return {
 					sql = { "sql_formatter" },
 					scala = { "scalafmt" },
 					proto = { "buf" },
-					go = { "goimports", "gofmt" },
+					go = { "goimports", "gofmt", "swag" },
 					-- elixir = { "lexical" },
 					python = { "ruff_format" },
 					lua = { "stylua" },
@@ -92,6 +92,11 @@ return {
 						command = "biome",
 						args = { "check", "--unsafe", "--write", "$FILENAME" },
 						stdin = false,
+					},
+					swag = {
+						command = "swag",
+						args = { "fmt", "-pipe" },
+						stdin = true,
 					},
 				},
 				format_on_save = {
