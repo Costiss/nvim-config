@@ -6,7 +6,7 @@ return {
 		},
 		config = function()
 			require("nvim-biscuits").setup({
-				cursor_line_only = true,
+				cursor_line_only = false,
 			})
 		end,
 	},
