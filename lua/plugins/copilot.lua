@@ -30,7 +30,7 @@ return {
 		"CopilotC-Nvim/CopilotChat.nvim",
 		lazy = false,
 		priority = 100,
-		commit = "75653259442a8eb895abfc70d7064e07aeb7134c",
+		--commit = "75653259442a8eb895abfc70d7064e07aeb7134c",
 		dependencies = {
 			{ "github/copilot.vim" }, -- or zbirenbaum/copilot.lua
 			{ "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
