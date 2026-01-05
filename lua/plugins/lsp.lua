@@ -91,7 +91,7 @@ return {
 			require("lsp_configs.jdtls")(on_attach)
 			require("lsp_configs.kotlin")(on_attach)
 			require("lsp_configs.lua")(on_attach)
-			require("lsp_configs.rust")(on_attach)
+			require("lsp_configs.rust")()
 			require("lsp_configs.terraform")(on_attach)
 			require("lsp_configs.zig")(on_attach)
 			require("lsp_configs.golang")(on_attach)
