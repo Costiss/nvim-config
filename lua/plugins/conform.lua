@@ -8,7 +8,7 @@ return {
 			mason_install({
 				"prettierd",
 				"biome",
-				"sql-formatter",
+				"pgformatter",
 				"buf",
 				"goimports",
 				"gopls",
@@ -78,7 +78,7 @@ return {
 					json = get_js_formatters(),
 					yaml = { "prettierd" },
 					xml = { "prettierd" },
-					sql = { "sql_formatter" },
+					sql = { "pg_format" },
 					scala = { "scalafmt" },
 					proto = { "buf" },
 					go = { "goimports", "gofmt", "swag" },
@@ -97,6 +97,11 @@ return {
 						command = "swag",
 						args = { "fmt", "-pipe" },
 						stdin = true,
+					},
+					pgformat = {
+						command = "pg_format",
+						args = { "-o", "$FILENAME", "$FILENAME" },
+						stdin = false,
 					},
 				},
 				format_on_save = {
