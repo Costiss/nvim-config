@@ -96,14 +96,14 @@ return function()
 	end
 
 	vim.lsp.config("volar", {
-		on_new_config = function(new_config, new_root_dir)
-			new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
-		end,
+		cmd = { "vue-language-server", "--stdio" },
+		filetypes = { "vue" },
 		init_options = {
 			vue = {
-				hybridMode = false,
+				hybridMode = true, -- explicit hybrid mode
 			},
 		},
+		root_markers = { "vue.config.js", "vite.config.ts", "package.json", ".git" },
 	})
 
 	vim.lsp.enable("denols")
