@@ -90,7 +90,7 @@ return {
 				formatters = {
 					biome = {
 						command = "biome",
-						args = { "check", "--unsafe", "--write", "$FILENAME" },
+						args = { "check", "--write", "$FILENAME" },
 						stdin = false,
 					},
 					swag = {
