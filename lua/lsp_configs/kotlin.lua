@@ -10,25 +10,35 @@ return function()
 		"ktlint",
 	}
 
-	-- Define or override the configuration
 	vim.lsp.config("kotlin_lsp", {
 		cmd = { "kotlin-lsp", "--stdio" },
-		filetypes = { "kotlin" },
-		cmd_env = {
-			JAVA_HOME = vim.fn.expand("$HOME/.sdkman/candidates/java/17.0.14-tem"),
-		},
+		filetypes = { "kotlin", "kotlin.kts", "java" },
+		single_file_support = true,
 		root_markers = {
 			"settings.gradle.kts",
 			"settings.gradle",
 			"build.gradle.kts",
 			"build.gradle",
+			".git",
+			"gradlew",
+			"mvnw",
+			"pom.xml",
 		},
-		-- Optional: add specific initialization settings
 		settings = {
 			kotlin = {
 				compiler = {
 					jvm = {
 						target = "17", -- Set your project's JVM target
+					},
+				},
+				scripts = {
+					buildScriptsEnabled = true,
+				},
+				externalLibraries = {
+					maven = {
+						enabled = true,
+						localRepository = vim.fn.expand("$HOME/.m2/repository"), -- Path to your local Maven repository
+						useMavenWrapper = true, -- Use Maven Wrapper if available
 					},
 				},
 			},
@@ -37,6 +47,4 @@ return function()
 
 	-- Enable it for the current session
 	vim.lsp.enable("kotlin_lsp")
-
-	vim.lsp.enable("kotlin-lsp")
 end

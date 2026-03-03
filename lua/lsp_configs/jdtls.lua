@@ -13,7 +13,18 @@ return function(on_attach)
 			JAVA_HOME = vim.fn.expand("$HOME/.sdkman/candidates/java/21.0.7-jbr"),
 		},
 		filetypes = { "java" },
-		root_markers = { "gradlew", ".git", "mvnw" },
+		-- include Android/Gradle specific markers so Android Studio projects are detected
+		root_markers = {
+			"settings.gradle",
+			"settings.gradle.kts",
+			"build.gradle",
+			"build.gradle.kts",
+			"gradlew",
+			"local.properties",
+			".git",
+			"mvnw",
+		},
+		single_file_support = true,
 		cmd = {
 			"jdtls",
 			"--jvm-arg=-javaagent:" .. vim.fn.expand("$MASON/share/jdtls/lombok.jar"),
@@ -26,8 +37,10 @@ return function(on_attach)
 			"--jvm-arg=--add-modules=ALL-SYSTEM",
 			"--jvm-arg=--add-opens=java.base/java.util=ALL-UNNAMED",
 			"--jvm-arg=--add-opens=java.base/java.lang=ALL-UNNAMED",
-			vim.fn.expand("-configuration $HOME/.cache/jdtls/config"),
-			vim.fn.expand("-data $HOME/.cache/jdtls/workspace"),
+			"-configuration",
+			vim.fn.expand("$HOME/.cache/jdtls/config"),
+			"-data",
+			vim.fn.expand("$HOME/.cache/jdtls/workspace"),
 		},
 		settings = {
 			java = {
