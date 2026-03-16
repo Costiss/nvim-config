@@ -134,4 +134,5 @@ vmap <leader>y "+y
 command! Run :action RunClass
 command! FindFile :action SelectInProjectView
 
+inoremap <C-h> :action ParameterInfo<CR>
 
