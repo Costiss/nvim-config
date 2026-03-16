@@ -85,8 +85,8 @@ nnoremap Q <nop>
 
 nnoremap <C-k> :action NextHighlightedError<CR>
 nnoremap <C-j> :action PreviousHighlightedError<CR>
-nnoremap <leader>k :action NextTab<CR>
-nnoremap <leader>j :action PreviousTab<CR>
+nnoremap <C-A-k> :action NextTab<CR>
+nnoremap <C-A-j> :action PreviousTab<CR>
 
 nnoremap <leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
 nnoremap <leader>x :!chmod +x %<CR>
