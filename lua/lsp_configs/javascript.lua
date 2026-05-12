@@ -75,25 +75,6 @@ return function()
 	vim.lsp.config("astro", {})
 
 	-- :MasonInstall vue-language-server@1.8.27
-	local util = require("lspconfig.util")
-	local function get_typescript_server_path(root_dir)
-		local global_ts = vim.fn.expand("$HOME/.bun/lib/node_modules/typescript/lib")
-		-- Alternative location if installed as root:
-		-- local global_ts = '/usr/local/lib/node_modules/typescript/lib'
-		local found_ts = ""
-		local function check_dir(path)
-			found_ts = util.path.join(path, "node_modules", "typescript", "lib")
-			if util.path.exists(found_ts) then
-				return path
-			end
-		end
-		if util.search_ancestors(root_dir, check_dir) then
-			return found_ts
-		else
-			print("found global")
-			return global_ts
-		end
-	end
 
 	vim.lsp.config("volar", {
 		cmd = { "vue-language-server", "--stdio" },
@@ -111,7 +92,7 @@ return function()
 	vim.lsp.enable("prismals")
 	vim.lsp.enable("eslint")
 	vim.lsp.enable("biome")
-	vim.lsp.enable("tailwindcss")
+	-- vim.lsp.enable("tailwindcss")
 	vim.lsp.enable("astro")
-	-- vim.lsp.enable("volar")
+	vim.lsp.enable("volar")
 end

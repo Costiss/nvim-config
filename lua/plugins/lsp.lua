@@ -5,29 +5,20 @@ return {
 			"JoosepAlviste/nvim-ts-context-commentstring",
 		},
 		config = function()
-			--require("Comment").setup()
 			require("Comment").setup({
 				pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
 			})
 		end,
 	},
+
+	-- 1. Native LSP Configuration
 	{
-		"VonHeikemen/lsp-zero.nvim",
-		branch = "v4.x",
+		"neovim/nvim-lspconfig",
 		dependencies = {
-			----------- OPTIONALS -------------------
-			-- This tiny plugin adds vscode-like pictograms to neovim built-in lsp
-			"onsails/lspkind.nvim",
-			-- UI
-			"stevearc/dressing.nvim",
-			--------------------------------------
-			"neovim/nvim-lspconfig", -- Required
-			"hrsh7th/nvim-cmp", -- Required
-			"hrsh7th/cmp-nvim-lsp", -- Required
-			"L3MON4D3/LuaSnip", -- Required
+			"stevearc/dressing.nvim", -- UI
 		},
 		config = function()
-			-- Diagnostic configuration (keep this part)
+			-- Diagnostic configuration
 			local signs = { Error = "✘", Warn = "▲", Hint = "⚑", Info = "" }
 			for type, icon in pairs(signs) do
 				local hl = "DiagnosticSign" .. type
@@ -50,13 +41,11 @@ return {
 				float = { border = "rounded", source = "always" },
 			})
 
-			-- New LspAttach handler instead of on_attach
+			-- Native LspAttach handler for Keymaps
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("user-lsp", {}),
 				callback = function(args)
 					local bufnr = args.buf
-					local client = vim.lsp.get_client_by_id(args.data.client_id)
-
 					local opts = { buffer = bufnr, remap = false }
 					local keymap = vim.keymap.set
 
@@ -83,6 +72,10 @@ return {
 				end,
 			})
 
+			-- Load all your individual server configs
+			-- Note: Since you are using Neovim 0.10+ global capabilities (set in cmp block),
+			-- you don't necessarily need the empty on_attach passed here anymore,
+			-- but I left it in case your individual files rely on it.
 			local on_attach = function(client, bufnr) end
 			require("lsp_configs.clang")(on_attach)
 			require("lsp_configs.elixir")(on_attach)
@@ -102,12 +95,29 @@ return {
 			require("lsp_configs.json")(on_attach)
 			require("lsp_configs.dart")(on_attach)
 			require("lsp_configs.kube")(on_attach)
+		end,
+	},
 
+	-- 2. Native Autocompletion Configuration
+	{
+		"hrsh7th/nvim-cmp",
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+			"L3MON4D3/LuaSnip",
+			"onsails/lspkind.nvim",
+		},
+		config = function()
 			local cmp = require("cmp")
 			local lspkind = require("lspkind")
 
 			cmp.setup({
 				preselect = cmp.PreselectMode.Item,
+				-- It is recommended to add a snippet engine setup here so completion items expand properly
+				snippet = {
+					expand = function(args)
+						require("luasnip").lsp_expand(args.body)
+					end,
+				},
 				mapping = {
 					["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
 					["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
@@ -135,10 +145,10 @@ return {
 				sources = {
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
-					-- Add other sources as needed
 				},
 			})
 
+			-- Broadcast completion capabilities to all LSP servers (Neovim 0.10+ feature)
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 			vim.lsp.config("*", { capabilities = capabilities })
 		end,
